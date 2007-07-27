@@ -1,0 +1,272 @@
+$content[type]  = array (
+  'name' => 'Conference',
+  'type' => 'webform',
+  'description' => 'Create a conference to publicize on your website.',
+  'title_label' => 'Title',
+  'body_label' => 'Overview',
+  'min_word_count' => '10',
+  'help' => '',
+  'node_options' => 
+  array (
+    'status' => true,
+    'promote' => false,
+    'sticky' => false,
+    'revision' => false,
+  ),
+  'comment' => '2',
+  'upload' => '0',
+  'old_type' => 'webform',
+  'orig_type' => 'webform',
+  'module' => 'webform',
+  'custom' => '0',
+  'modified' => '1',
+  'locked' => '1',
+  'reset' => 'Reset to defaults',
+  'location_maxnum' => '1',
+  'location_defaultnum' => '1',
+  'location_weight' => '9',
+  'location_collapsible' => 0,
+  'location_collapsed' => 0,
+  'location_addanother' => 0,
+  'location_name' => '1',
+  'location_street' => '1',
+  'location_city' => '1',
+  'location_province' => '1',
+  'location_postal_code' => '1',
+  'location_country' => '1',
+);
+$content[groups]  = array (
+  0 => 
+  array (
+    'label' => 'Logistics',
+    'settings' => 
+    array (
+      'form' => 
+      array (
+        'style' => 'fieldset_collapsible',
+        'description' => '',
+      ),
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 'fieldset',
+        'full' => 'fieldset',
+        'label' => 'above',
+      ),
+    ),
+    'weight' => '-3',
+    'group_name' => 'group_logistics',
+  ),
+);
+$content[fields]  = array (
+  0 => 
+  array (
+    'widget_type' => 'text',
+    'label' => 'Accommodations',
+    'weight' => '0',
+    'rows' => '5',
+    'description' => 'Enter driving directions, hotel instructions, and any other logistical information for your conference here.',
+    'default_value_widget' => 
+    array (
+      'field_accommodations' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+        ),
+      ),
+    ),
+    'field_accommodations' => 
+    array (
+      0 => 
+      array (
+        'format' => '4',
+      ),
+    ),
+    'default_value_php' => '',
+    'group' => 'group_logistics',
+    'required' => '0',
+    'multiple' => '0',
+    'text_processing' => '1',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'field_name' => 'field_accommodations',
+    'field_type' => 'text',
+    'module' => 'text',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+      ),
+    ),
+  ),
+  1 => 
+  array (
+    'widget_type' => 'options_onoff',
+    'label' => 'Allow session proposals',
+    'weight' => '0',
+    'description' => '',
+    'default_value_widget' => 
+    array (
+      'field_allow_session_proposals' => 
+      array (
+        'keys' => 1,
+      ),
+    ),
+    'default_value_php' => '',
+    'group' => false,
+    'required' => '0',
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0|Proposed sessions not enabled
+1|Allow session proposals from users',
+    'allowed_values_php' => '',
+    'field_name' => 'field_allow_session_proposals',
+    'field_type' => 'text',
+    'module' => 'text, optionwidgets',
+  ),
+  2 => 
+  array (
+    'widget_type' => 'options_onoff',
+    'label' => 'Allow session signups',
+    'weight' => '0',
+    'description' => '',
+    'default_value_widget' => 
+    array (
+      'field_allow_session_signups' => 
+      array (
+        'keys' => 0,
+      ),
+    ),
+    'default_value_php' => '',
+    'group' => false,
+    'required' => '0',
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0|Do not allow session sign ups
+1|Allow session sign ups',
+    'allowed_values_php' => '',
+    'field_name' => 'field_allow_session_signups',
+    'field_type' => 'text',
+    'module' => 'text, optionwidgets',
+  ),
+  3 => 
+  array (
+    'widget_type' => 'options_onoff',
+    'label' => 'Allow users to chat',
+    'weight' => '0',
+    'description' => '',
+    'default_value_widget' => 
+    array (
+      'field_can_chat' => 
+      array (
+        'keys' => 1,
+      ),
+    ),
+    'default_value_php' => '',
+    'group' => false,
+    'required' => '0',
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0|Do not allow users to chat
+1|Allow users to chat',
+    'allowed_values_php' => '',
+    'field_name' => 'field_can_chat',
+    'field_type' => 'text',
+    'module' => 'text, optionwidgets',
+  ),
+  4 => 
+  array (
+    'widget_type' => 'image',
+    'label' => 'Logo',
+    'weight' => '0',
+    'max_resolution' => '170x170',
+    'image_path' => '',
+    'custom_alt' => 0,
+    'custom_title' => 0,
+    'description' => '',
+    'group' => false,
+    'required' => '0',
+    'multiple' => '0',
+    'field_name' => 'field_cod_logo',
+    'field_type' => 'image',
+    'module' => 'imagefield',
+  ),
+  5 => 
+  array (
+    'widget_type' => 'date_js',
+    'label' => 'Start',
+    'weight' => '2',
+    'description' => '',
+    'group' => 'group_logistics',
+    'required' => '1',
+    'multiple' => '0',
+    'granularity' => 
+    array (
+      'Y' => 'Y',
+      'M' => 'M',
+      'D' => 'D',
+    ),
+    'todate' => '',
+    'input_format' => 'site-wide',
+    'input_format_custom' => '',
+    'output_format_date' => 'm/d/Y - g:ia',
+    'output_format_zone' => '',
+    'output_format_custom' => '',
+    'output_format_date_long' => 'l, F j, Y - g:ia',
+    'output_format_zone_long' => '',
+    'output_format_custom_long' => '',
+    'output_format_date_medium' => 'D, m/d/Y - g:ia',
+    'output_format_zone_medium' => '',
+    'output_format_custom_medium' => '',
+    'output_format_date_short' => 'm/d/Y - g:ia',
+    'output_format_zone_short' => '',
+    'output_format_custom_short' => '',
+    'tz_handling' => 'none',
+    'field_timezone' => 'America/Los_Angeles',
+    'field_name' => 'field_start',
+    'field_type' => 'date',
+    'module' => 'date',
+  ),
+  6 => 
+  array (
+    'widget_type' => 'date_js',
+    'label' => 'End',
+    'weight' => '3',
+    'description' => '',
+    'group' => 'group_logistics',
+    'required' => '1',
+    'multiple' => '0',
+    'granularity' => 
+    array (
+      'Y' => 'Y',
+      'M' => 'M',
+      'D' => 'D',
+    ),
+    'todate' => '',
+    'input_format' => 'site-wide',
+    'input_format_custom' => '',
+    'output_format_date' => 'm/d/Y - g:ia',
+    'output_format_zone' => '',
+    'output_format_custom' => '',
+    'output_format_date_long' => 'l, F j, Y - g:ia',
+    'output_format_zone_long' => '',
+    'output_format_custom_long' => '',
+    'output_format_date_medium' => 'D, m/d/Y - g:ia',
+    'output_format_zone_medium' => '',
+    'output_format_custom_medium' => '',
+    'output_format_date_short' => 'm/d/Y - g:ia',
+    'output_format_zone_short' => '',
+    'output_format_custom_short' => '',
+    'tz_handling' => 'none',
+    'field_timezone' => 'America/Los_Angeles',
+    'field_name' => 'field_end',
+    'field_type' => 'date',
+    'module' => 'date',
+  ),
+);

@@ -1,0 +1,161 @@
+$content[type]  = array (
+  'name' => 'Profile',
+  'type' => 'bio',
+  'description' => 'Biography of a conference registrant.',
+  'title_label' => 'Title',
+  'body_label' => 'Biography',
+  'min_word_count' => '0',
+  'help' => '',
+  'node_options' => 
+  array (
+    'status' => true,
+    'promote' => false,
+    'sticky' => false,
+    'revision' => false,
+  ),
+  'comment' => '0',
+  'upload' => 1,
+  'old_type' => 'bio',
+  'orig_type' => 'bio',
+  'module' => 'node',
+  'custom' => '1',
+  'modified' => '1',
+  'locked' => '0',
+  'location_maxnum' => '1',
+  'location_defaultnum' => '1',
+  'location_weight' => '9',
+  'location_collapsible' => 1,
+  'location_collapsed' => 0,
+  'location_addanother' => 0,
+  'location_name' => '0',
+  'location_street' => '0',
+  'location_city' => '1',
+  'location_province' => '1',
+  'location_postal_code' => '1',
+  'location_country' => '1',
+);
+$content[fields]  = array (
+  0 => 
+  array (
+    'widget_type' => 'text',
+    'label' => 'First Name',
+    'weight' => '-5',
+    'rows' => '1',
+    'description' => '',
+    'default_value_widget' => 
+    array (
+      'field_first_name' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+        ),
+      ),
+    ),
+    'default_value_php' => '',
+    'group' => false,
+    'required' => '1',
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'field_name' => 'field_first_name',
+    'field_type' => 'text',
+    'module' => 'text',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+      ),
+    ),
+  ),
+  1 => 
+  array (
+    'widget_type' => 'text',
+    'label' => 'Last Name',
+    'weight' => '-4',
+    'rows' => '1',
+    'description' => '',
+    'default_value_widget' => 
+    array (
+      'field_last_name' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+        ),
+      ),
+    ),
+    'default_value_php' => '',
+    'group' => false,
+    'required' => '1',
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'field_name' => 'field_last_name',
+    'field_type' => 'text',
+    'module' => 'text',
+  ),
+  2 => 
+  array (
+    'widget_type' => 'text',
+    'label' => 'Title',
+    'weight' => '-2',
+    'rows' => '1',
+    'description' => '',
+    'default_value_widget' => 
+    array (
+      'field_title' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+        ),
+      ),
+    ),
+    'default_value_php' => '',
+    'group' => false,
+    'required' => '0',
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'field_name' => 'field_title',
+    'field_type' => 'text',
+    'module' => 'text',
+  ),
+  3 => 
+  array (
+    'widget_type' => 'text',
+    'label' => 'Organization',
+    'weight' => '-1',
+    'rows' => '1',
+    'description' => '',
+    'default_value_widget' => 
+    array (
+      'field_organization' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+        ),
+      ),
+    ),
+    'default_value_php' => '',
+    'group' => false,
+    'required' => '1',
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'field_name' => 'field_organization',
+    'field_type' => 'text',
+    'module' => 'text',
+  ),
+);
