@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Id:
 
 /**
  * Return an array of the modules to be enabled when this profile is installed.
@@ -7,7 +7,7 @@
  *  An array of modules to be enabled.
  */
 
-function conference_organizing_profile_modules() {
+function cod_profile_modules() {
   return array(
 
     /* CCK */
@@ -54,7 +54,7 @@ function conference_organizing_profile_modules() {
  * @return
  *   An array with keys 'name' and 'description' describing this profile.
  */
-function conference_organizing_profile_details() {
+function cod_profile_details() {
   return array(
     'name' => t('Conference Organizing'),
     'description' => t('Select this profile to get a Drupal based conference website.'),
@@ -68,7 +68,7 @@ function conference_organizing_profile_details() {
  *   An optional HTML string to display to the user on the final installation
  *   screen.
  */
-function conference_organizing_profile_final() {
+function cod_profile_final() {
   
   // Theme Install
   // --------
