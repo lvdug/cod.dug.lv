@@ -69,13 +69,13 @@ function cod_profile_final() {
   
   // Theme Install
   // --------
-  install_default_theme('conference_organizing_theme'); // Theme Stuff
+  install_default_theme('cod_organizing'); // Theme Stuff
   install_admin_theme('garland'); // Theme Stuff
 
   // Block Install
   // --------
   global $theme_key;
-  $theme_key = "conference_organizing_theme";
+  $theme_key = "cod_organizing";
   _block_rehash();
   db_query("update blocks set region = '' where theme = '$theme_key' and (module = 'og' or module = 'user' or module = 'menu')");
   
@@ -2019,7 +2019,7 @@ variable_set('site_mission', '');
 variable_set('site_name', 'Conference');
 variable_set('site_slogan', '');
 variable_set('smtp_library', '');
-variable_set('theme_default', 'conference_organizing_theme');
+variable_set('theme_default', 'cod_organizing');
 variable_set('theme_garland_settings', array (
     'toggle_logo' => 1,
     'toggle_name' => 1,
@@ -2198,7 +2198,7 @@ variable_set('theme_garland_settings', array (
         'base_image' => 'color/base.png',
         ),
         ));
-variable_set('theme_conference_organizing_theme_settings', array (
+variable_set('theme_cod_organizing_settings', array (
     'toggle_logo' => 1,
     'toggle_name' => 0,
     'toggle_slogan' => 0,
@@ -2208,7 +2208,7 @@ variable_set('theme_conference_organizing_theme_settings', array (
     'toggle_search' => 0,
     'toggle_favicon' => 1,
     'default_logo' => 0,
-    'logo_path' => 'sites/all/themes/conference_organizing_theme/small_logo.png',
+    'logo_path' => 'sites/all/themes/cod_organizing/small_logo.png',
     'logo_upload' => '',
     'default_favicon' => 1,
     'favicon_path' => '',
@@ -2226,7 +2226,7 @@ variable_set('upload_group', '0');
 variable_set('upload_link', '0');
 variable_set('upload_notes', '0');
 variable_set('upload_webform', '0');
-variable_set('user_picture_default', 'sites/all/themes/conference_organizing_theme/images/default-avatar.png');
+variable_set('user_picture_default', 'sites/all/themes/cod_organizing/images/default-avatar.png');
 variable_set('user_picture_dimensions', '55x55');
 variable_set('user_picture_file_size', '30');
 variable_set('user_picture_guidelines', '');
