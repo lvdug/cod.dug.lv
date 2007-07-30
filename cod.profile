@@ -25,9 +25,6 @@ function cod_profile_modules() {
     /* Javascript tools */
     'jscalendar', 'jstools', 'tabs', 
 
-    /* Links */
-    'links', 
-
     /* Location */
     'location', 
 
