@@ -70,14 +70,13 @@ function cod_profile_final() {
   // Theme Install
   // --------
   install_default_theme('cod_organizing'); // Theme Stuff
-  install_admin_theme('garland'); // Theme Stuff
-
-  // Block Install
-  // --------
-  global $theme_key;
-  $theme_key = "cod_organizing";
+  install_admin_theme('garland'); 
+  // Block Install 
+  // -------- 
+  global $theme_key; 
+  $theme_key = "cod_organizing"; 
   _block_rehash();
-  db_query("update blocks set region = '' where theme = '$theme_key' and (module = 'og' or module = 'user' or module = 'menu')");
+  db_query("DELETE FROM {blocks} WHERE theme = '$theme_key' AND (module = 'og' OR module = 'user' or module = 'menu')");
   
   // CCK Install
   // --------
@@ -1994,6 +1993,28 @@ variable_set('pathauto_version', array (
     'text' => '2005-9-18',
     'build' => 5,
 ));
+
+// Pearwiki Stuff
+// Remove roles from ‘Filtered HTML’ 
+format db_query(“UPDATE {filter_formats} SET roles = ’’ WHERE format = 1”); 
+// Add mediawiki format 
+db_query(“INSERT INTO {filter_formats} (`format`, `name`, `roles`, `cache`) VALUES (%d, ‘Mediawiki’, ’,,’, 1)”, $format_id); 
+// Add pearwiki filter and geshi filter to mediawiki format 
+db_query(“INSERT INTO {filters} (`format`, `module`, `delta`, `weight`) VALUES (%d, ‘pearwiki_filter’, 0, -5)”, $format_id); 
+// Set mediawiki filter to default 
+$format_id = 4; 
+variable_set(‘filter_default_format’, $format_id); 
+// Use mediawiki syntax 
+pearwiki_filter_syntax($format_id, ‘Mediawiki’); 
+// Allow HTML  
+pearwiki_filter_allow_html($format_id, true); 
+// Ignore ‘code’ tag 
+pearwiki_filter_ignore_tags($format_id, ‘code’); 
+// Activate wikilinks 
+pearwiki_filter_use_wiki_links($format_id, true); 
+pearwiki_filter_use_wikitools($format_id, true); 
+// Activate image module 
+pearwiki_filter_use_image($format_id, true);
 variable_set('pearwiki_filter_ignore_regexp_4', '');
 variable_set('pearwiki_filter_ignore_tags_4', '<p> <li> <img>');
 variable_set('pearwiki_filter_image_base_4', 'files/');
