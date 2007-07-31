@@ -32,13 +32,13 @@ function cod_profile_modules() {
     'og', 
 
     /* Other */
-    'akismet', 'bio', 'chatroom', 'date_api', 'logintoboggan', 'moduleweight', 'pathauto', 'pearwiki_filter', 'update_status', 'webform', 'wikitools', 
+    'bio', 'chatroom', 'date_api', 'logintoboggan', 'pathauto', 'pearwiki_filter', 'update_status', 'webform', 'wikitools', 
 
     /* Taxonomy */
     'tagadelic', 
 
     /* Views */
-    'tagadelic_views', 'views', 'views_bonus', 'views_fastsearch', 'views_rss', 'views_theme_wizard', 'views_ui', 
+    'tagadelic_views', 'views', 'views_bonus', 'views_fastsearch', 'views_rss',  'views_ui', 
 
     /* Voting */
     'vote_up_down', 'votingapi', 
@@ -76,7 +76,10 @@ function cod_profile_final() {
   global $theme_key; 
   $theme_key = "cod_organizing"; 
   _block_rehash();
-  db_query("DELETE FROM {blocks} WHERE theme = '$theme_key' AND (module = 'og' OR module = 'user' or module = 'menu')");
+  // db_query("DELETE FROM {blocks} WHERE theme = '$theme_key' AND (module = 'og' OR module = 'user' or module = 'menu')");
+  db_query("UPDATE {blocks} set region = '' WHERE theme = '$theme_key' AND (module = 'og' OR module = 'user' OR module = 'menu')");
+
+
   
   // CCK Install
   // --------
@@ -267,50 +270,53 @@ foreach ($types as $name => $file) {
       21 => ' administer nodes',
       22 => ' create bio content',
       23 => ' create discussion content',
-      24 => ' create link content',
-      25 => ' create notes content',
-      26 => ' create page content',
-      27 => ' create session content',
-      28 => ' edit bio content',
-      29 => ' edit discussion content',
-      30 => ' edit link content',
-      31 => ' edit notes content',
-      32 => ' edit own bio content',
-      33 => ' edit own discussion content',
-      34 => ' edit own link content',
-      35 => ' edit own notes content',
-      36 => ' edit own page content',
-      37 => ' edit own session content',
-      38 => ' edit page content',
-      39 => ' edit session content',
-      40 => ' revert revisions',
-      41 => ' view revisions',
-      42 => ' administer organic groups',
-      43 => ' administer url aliases',
-      44 => ' create url aliases',
-      45 => ' administer pathauto',
-      46 => ' access administration pages',
-      47 => ' administer site configuration',
-      48 => ' select different theme',
-      49 => ' administer taxonomy',
-      50 => ' upload files',
-      51 => ' view uploaded files',
-      52 => ' access user profiles',
-      53 => ' administer access control',
-      54 => ' administer users',
-      55 => ' access all views',
-      56 => ' administer views',
-      57 => ' access up-down vote statistic',
-      58 => ' administer up-down vote',
-      59 => ' use up-down vote',
-      60 => ' view up-down vote',
-      61 => ' administer voting api',
-      62 => ' access webform results',
-      63 => ' clear webform results',
-      64 => ' create webforms',
-      65 => ' edit own webforms',
-      66 => ' edit webforms',
-      67 => ' use PHP for additional processing')
+      24 => ' create group content',
+      25 => ' create link content',
+      26 => ' create notes content',
+      27 => ' create page content',
+      28 => ' create session content',
+      29 => ' edit bio content',
+      30 => ' edit discussion content',
+      31 => ' edit group content',
+      32 => ' edit link content',
+      33 => ' edit notes content',
+      34 => ' edit own bio content',
+      35 => ' edit own discussion content',
+      36 => ' edit own group content',
+      37 => ' edit own link content',
+      38 => ' edit own notes content',
+      39 => ' edit own page content',
+      40 => ' edit own session content',
+      41 => ' edit page content',
+      42 => ' edit session content',
+      43 => ' revert revisions',
+      44 => ' view revisions',
+      45 => ' administer organic groups',
+      46 => ' administer url aliases',
+      47 => ' create url aliases',
+      48 => ' administer pathauto',
+      49 => ' access administration pages',
+      50 => ' administer site configuration',
+      51 => ' select different theme',
+      52 => ' administer taxonomy',
+      53 => ' upload files',
+      54 => ' view uploaded files',
+      55 => ' access user profiles',
+      56 => ' administer access control',
+      57 => ' administer users',
+      58 => ' access all views',
+      59 => ' administer views',
+      60 => ' access up-down vote statistic',
+      61 => ' administer up-down vote',
+      62 => ' use up-down vote',
+      63 => ' view up-down vote',
+      64 => ' administer voting api',
+      65 => ' access webform results',
+      66 => ' clear webform results',
+      67 => ' create webforms',
+      68 => ' edit own webforms',
+      69 => ' edit webforms',
+      70 => ' use PHP for additional processing',)
       );
 
       install_set_permissions(1, array (
@@ -334,10 +340,11 @@ foreach ($types as $name => $file) {
           12 => ' edit own discussion content',
           13 => ' edit own link content',
           14 => ' edit own notes content',
-          15 => ' access user profiles',
-          16 => ' use up-down vote',
-          17 => ' view up-down vote',
-          18 => ' access webform results')
+          15 => ' view uploaded files',
+          16 => ' access user profiles',
+          17 => ' use up-down vote',
+          18 => ' view up-down vote',
+          19 => ' access webform results',)
       );
 
       install_set_permissions(
@@ -350,27 +357,31 @@ foreach ($types as $name => $file) {
           4 => ' access content',
           5 => ' create bio content',
           6 => ' create discussion content',
-          7 => ' create link content',
-          8 => ' create notes content',
-          9 => ' create session content',
-          10 => ' edit notes content',
-          11 => ' edit own bio content',
-          12 => ' edit own link content',
-          13 => ' edit own notes content',
-          14 => ' edit own session content',
-          15 => ' revert revisions',
-          16 => ' view revisions',
-          17 => ' upload files',
-          18 => ' view uploaded files',
-          19 => ' access user profiles',
-          20 => ' use up-down vote',
-          21 => ' view up-down vote',
-          22 => ' access webform results',
-          23 => ' create webforms',
-          24 => ' edit own webforms',
-          25 => ' edit webforms'
-        )
-      );
+          7 => ' create group content',
+          8 => ' create link content',
+          9 => ' create notes content',
+          10 => ' create session content',
+          11 => ' edit notes content',
+          12 => ' edit own bio content',
+          13 => ' edit own discussion content',
+          14 => ' edit own group content',
+          15 => ' edit own link content',
+          16 => ' edit own notes content',
+          17 => ' edit own page content',
+          18 => ' edit own session content',
+          19 => ' revert revisions',
+          20 => ' view revisions',
+          21 => ' upload files',
+          22 => ' view uploaded files',
+          23 => ' access user profiles',
+          24 => ' use up-down vote',
+          25 => ' view up-down vote',
+          26 => ' access webform results',
+          27 => ' create webforms',
+          28 => ' edit own webforms',
+          29 => ' edit webforms',
+          )
+          );
 
 
       // Menu Install
@@ -829,111 +840,102 @@ $views[$view->name] = $view;
 views_sanitize_view($view);
 drupal_execute('views_edit_view', array(), $view, '');
 
-$view = new stdClass();
-$view->name = 'cod_discussions';
-$view->description = 'Recent Discussions';
-$view->access = array (
+  $view = new stdClass();
+  $view->name = 'cod_discussions';
+  $view->description = 'Recent Discussions';
+  $view->access = array (
 );
-$view->view_args_php = '';
-$view->page = TRUE;
-$view->page_title = 'Discussions';
-$view->page_header = '<p>
-<?php
-$group = conference_organizing_get_conference_context();
-print l(\'Start a Discussion\',\'node/add/discussion/parent/\'.$group->nid);
-?>
-</p>';
-$view->page_header_format = '2';
-$view->page_footer = '';
-$view->page_footer_format = '1';
-$view->page_empty = '<p>
-<?php
-$group = conference_organizing_get_conference_context();
-print l(\'Start a Discussion\',\'node/add/discussion/parent/\'.$group->nid);
-?>
-</p>
-<p>No Discussions Found</p>';
-$view->page_empty_format = '2';
-$view->page_type = 'table';
-$view->url = '';
-$view->use_pager = TRUE;
-$view->nodes_per_page = '10';
-$view->sort = array (
-  array (
-    'tablename' => 'node_comment_statistics',
-    'field' => 'last_comment_timestamp',
-    'sortorder' => 'DESC',
-    'options' => 'normal',
-  ),
-  array (
-    'tablename' => 'node',
-    'field' => 'created',
-    'sortorder' => 'DESC',
-    'options' => 'normal',
-  ),
-);
-$view->argument = array (
-  array (
-    'type' => 'gid',
-    'argdefault' => '1',
-    'title' => '',
-    'options' => '',
-    'wildcard' => '',
-    'wildcard_substitution' => '',
-  ),
-);
-$view->field = array (
-  array (
-    'tablename' => 'node',
-    'field' => 'title',
-    'label' => 'Topic',
-    'handler' => 'views_handler_field_nodelink',
-    'options' => 'link',
-  ),
-  array (
-    'tablename' => 'node_data_field_related_session',
-    'field' => 'field_related_session_nid',
-    'label' => 'Related Session',
-    'handler' => 'content_views_field_handler_group',
-    'options' => 'default',
-  ),
-  array (
-    'tablename' => 'node_comment_statistics',
-    'field' => 'comment_count',
-    'label' => 'Comments',
-    'handler' => 'views_handler_field_int',
-  ),
-  array (
-    'tablename' => 'node_comment_statistics',
-    'field' => 'last_comment_timestamp',
-    'label' => 'Last Comment',
-    'handler' => 'views_handler_field_date_small',
-  ),
-  );
-$view->filter = array (
-  array (
-    'tablename' => 'node',
-    'field' => 'type',
-    'operator' => 'OR',
-    'options' => '',
-    'value' => array (
-      0 => 'discussion',
+  $view->view_args_php = '';
+  $view->page = TRUE;
+  $view->page_title = 'Discussions';
+  $view->page_header = '';
+  $view->page_header_format = '2';
+  $view->page_footer = '';
+  $view->page_footer_format = '1';
+  $view->page_empty = '<p>No Discussions Found</p>';
+  $view->page_empty_format = '2';
+  $view->page_type = 'table';
+  $view->url = '';
+  $view->use_pager = TRUE;
+  $view->nodes_per_page = '5';
+  $view->sort = array (
+    array (
+      'tablename' => 'node_comment_statistics',
+      'field' => 'last_comment_timestamp',
+      'sortorder' => 'DESC',
+      'options' => 'normal',
     ),
-  ),
-  array (
-    'tablename' => 'node',
-    'field' => 'status',
-    'operator' => '=',
-    'options' => '',
-    'value' => '1',
-  ),
-);
-$view->exposed_filter = array (
-);
-$view->requires = array(node_comment_statistics, node, node_data_field_related_session);
-$views[$view->name] = $view;
-views_sanitize_view($view);
-drupal_execute('views_edit_view', array(), $view, '');
+    array (
+      'tablename' => 'node',
+      'field' => 'created',
+      'sortorder' => 'DESC',
+      'options' => 'normal',
+    ),
+  );
+  $view->argument = array (
+    array (
+      'type' => 'gid',
+      'argdefault' => '1',
+      'title' => '',
+      'options' => '',
+      'wildcard' => '',
+      'wildcard_substitution' => '',
+    ),
+  );
+  $view->field = array (
+    array (
+      'tablename' => 'node',
+      'field' => 'title',
+      'label' => 'Topic',
+      'handler' => 'views_handler_field_nodelink',
+      'options' => 'link',
+    ),
+    array (
+      'tablename' => 'node_comment_statistics',
+      'field' => 'comment_count',
+      'label' => 'Comments',
+      'handler' => 'views_handler_field_int',
+    ),
+    array (
+      'tablename' => 'node_comment_statistics',
+      'field' => 'last_comment_timestamp',
+      'label' => 'Last Comment',
+      'handler' => 'views_handler_field_date_small',
+    ),
+  );
+  $view->filter = array (
+    array (
+      'tablename' => 'node',
+      'field' => 'type',
+      'operator' => 'OR',
+      'options' => '',
+      'value' => array (
+  0 => 'discussion',
+),
+    ),
+    array (
+      'tablename' => 'node',
+      'field' => 'status',
+      'operator' => '=',
+      'options' => '',
+      'value' => '1',
+    ),
+    array (
+      'tablename' => 'node',
+      'field' => 'distinct',
+      'operator' => '=',
+      'options' => '',
+      'value' => array (
+  0 => 'distinct',
+),
+    ),
+  );
+  $view->exposed_filter = array (
+  );
+  $view->requires = array(node_comment_statistics, node);
+  $views[$view->name] = $view;
+  views_sanitize_view($view);
+  drupal_execute('views_edit_view', array(), $view, '');
 
 $view = new stdClass();
 $view->name = 'cod_discussions_block';
@@ -1775,26 +1777,6 @@ variable_set('bio_profile_takeover', 1);
 variable_set('chatroom_auto_archive', 1);
 variable_set('clean_url', '1');
 variable_set('cod_registration_enforcement', 'nudge');
-variable_set('color_garland_files', array (
-    0 => 'files/color/garland-66a272d3/menu-collapsed.gif',
-    1 => 'files/color/garland-66a272d3/menu-expanded.gif',
-    2 => 'files/color/garland-66a272d3/menu-leaf.gif',
-    3 => 'files/color/garland-66a272d3/body.png',
-    4 => 'files/color/garland-66a272d3/bg-bar.png',
-    5 => 'files/color/garland-66a272d3/bg-bar-white.png',
-    6 => 'files/color/garland-66a272d3/bg-tab.png',
-    7 => 'files/color/garland-66a272d3/bg-navigation.png',
-    8 => 'files/color/garland-66a272d3/bg-content-left.png',
-    9 => 'files/color/garland-66a272d3/bg-content-right.png',
-    10 => 'files/color/garland-66a272d3/bg-content.png',
-    11 => 'files/color/garland-66a272d3/bg-navigation-item.png',
-    12 => 'files/color/garland-66a272d3/bg-navigation-item-hover.png',
-    13 => 'files/color/garland-66a272d3/gradient-inner.png',
-    14 => 'files/color/garland-66a272d3/logo.png',
-    15 => 'files/color/garland-66a272d3/screenshot.png',
-    16 => 'files/color/garland-66a272d3/style.css',
-));
-variable_set('color_garland_logo', 'files/color/garland-66a272d3/logo.png');
 variable_set('color_garland_palette', array (
     'base' => '#636363',
     'link' => '#6f6f6f',
@@ -1802,8 +1784,6 @@ variable_set('color_garland_palette', array (
     'bottom' => '#a7a7a7',
     'text' => '#4e4e4e',
 ));
-variable_set('color_garland_screenshot', 'files/color/garland-66a272d3/screenshot.png');
-variable_set('color_garland_stylesheet', 'files/color/garland-66a272d3/style.css');
 variable_set('comment_anonymous', 0);
 variable_set('comment_bio', '0');
 variable_set('comment_conference_og', '2');
@@ -1996,20 +1976,20 @@ variable_set('pathauto_version', array (
 
 // Pearwiki Stuff
 // Remove roles from ‘Filtered HTML’ 
-format db_query(“UPDATE {filter_formats} SET roles = ’’ WHERE format = 1”); 
+db_query("UPDATE {filter_formats} SET roles = '' WHERE format = 1"); 
 // Add mediawiki format 
-db_query(“INSERT INTO {filter_formats} (`format`, `name`, `roles`, `cache`) VALUES (%d, ‘Mediawiki’, ’,,’, 1)”, $format_id); 
+db_query("INSERT INTO {filter_formats} (`format`, `name`, `roles`, `cache`) VALUES (%d, 'Mediawiki', ',,', 1)", $format_id); 
 // Add pearwiki filter and geshi filter to mediawiki format 
-db_query(“INSERT INTO {filters} (`format`, `module`, `delta`, `weight`) VALUES (%d, ‘pearwiki_filter’, 0, -5)”, $format_id); 
+db_query("INSERT INTO {filters} (`format`, `module`, `delta`, `weight`) VALUES (%d, 'pearwiki_filter',0, -5)", $format_id); 
 // Set mediawiki filter to default 
 $format_id = 4; 
-variable_set(‘filter_default_format’, $format_id); 
+variable_set("filter_default_format", $format_id); 
 // Use mediawiki syntax 
-pearwiki_filter_syntax($format_id, ‘Mediawiki’); 
+pearwiki_filter_syntax($format_id, 'Mediawiki'); 
 // Allow HTML  
 pearwiki_filter_allow_html($format_id, true); 
 // Ignore ‘code’ tag 
-pearwiki_filter_ignore_tags($format_id, ‘code’); 
+pearwiki_filter_ignore_tags($format_id, 'code'); 
 // Activate wikilinks 
 pearwiki_filter_use_wiki_links($format_id, true); 
 pearwiki_filter_use_wikitools($format_id, true); 
