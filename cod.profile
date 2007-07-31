@@ -397,6 +397,15 @@ foreach ($types as $name => $file) {
       $item['type'] = 118;
       menu_save_item($item); 
 
+      $item = array();
+      $item['pid'] = $primary_menu_id;
+      $item['path'] = 'conferences';
+      $item['title'] = st('Conferences');
+      $item['description'] = st('Conferences');
+      $item['weight'] = -4;
+      $item['type'] = 118;
+      menu_save_item($item);
+
       // Taxonomy
       // --------
 
