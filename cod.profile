@@ -1768,6 +1768,7 @@ db_query("update {view_filter} set value = '1' where field = 'node_data_field_sc
 db_query("update {view_filter} set value = '1' where field = 'node_data_field_front_page.field_front_page_value_default';");
 db_query("update {view_view} set page_empty_format = '2' where name = 'cod_conferences' or name = 'cod_discussions' or name = 'cod_sessions_links';");
 db_query("update {view_tablefield} set handler = 'content_views_field_handler_group' where tablename in ('node_data_field_start', 'node_data_field_end', 'node_data_field_cod_logo');");
+db_query("update {view_tablefield} set options = 'default' where tablename in ('node_data_field_start', 'node_data_field_end', 'node_data_field_cod_logo');");
 
   // Variables
   // ---------
