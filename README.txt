@@ -70,7 +70,6 @@ tagadelic                 http://drupal.org/project/tagadelic
 tagadelic_views           http://drupal.org/project/tagadelic_views
 update_status             http://drupal.org/project/update_status
 views                     http://drupal.org/project/views
-views_bonus               http://drupal.org/project/views_bonus
 views_fastsearch          http://drupal.org/project/views_fastsearch
 vote_up_down              http://drupal.org/project/vote_up_down
 votingapi                 http://drupal.org/project/votingapi
