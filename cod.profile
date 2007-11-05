@@ -66,10 +66,7 @@ function cod_profile_details() {
  *   screen.
  */
 function cod_profile_final() {
-  // Set up Admin User
-  install_add_user('admin', 'admin', 'admin@admin.com', $roles = array(), $status = 1);
-  $user = user_authenticate('admin', 'admin');
-
+  
   // Theme Install
   // --------
   install_default_theme('cod_organizing'); // Theme Stuff
@@ -79,7 +76,8 @@ function cod_profile_final() {
   global $theme_key; 
   $theme_key = "cod_organizing"; 
   _block_rehash();
-  db_query("UPDATE {blocks} set status = 0 WHERE theme = '$theme_key' AND (module = 'og' OR module = 'user' OR module = 'menu')");
+  // db_query("DELETE FROM {blocks} WHERE theme = '$theme_key' AND (module = 'og' OR module = 'user' or module = 'menu')");
+  db_query("UPDATE {blocks} set region = '' WHERE theme = '$theme_key' AND (module = 'og' OR module = 'user' OR module = 'menu')");
 
 
   
@@ -1388,104 +1386,103 @@ $views[$view->name] = $view;
 views_sanitize_view($view);
 drupal_execute('views_edit_view', array(), $view, '');
 
-  $view = new stdClass();
-  $view->name = 'cod_conferences';
-  $view->description = 'Conferences';
-  $view->access = array (
+$view = new stdClass();
+$view->name = 'cod_conferences';
+$view->description = 'Conferences';
+$view->access = array (
 );
-  $view->view_args_php = '';
-  $view->page = TRUE;
-  $view->page_title = 'Conferences';
-  $view->page_header = 'Here is a list of upcoming conferences.
+$view->view_args_php = '';
+$view->page = TRUE;
+$view->page_title = 'Conferences';
+$view->page_header = 'Here at CoLab, we are working to provide you with a virtual, interactive conference that will allow you to actively participate in and catalog your discussions pertaining to the various seminars that will be presented. The first step in achieving this goal is to motivate all of you to comment on seminars that you think will be interesting, or anything else that may appeal to you, prior to attending the summit. An earlier email has already been sent informing you of your username and password. Once you login with these, please take a minute to fill out your profile and change your password, before proceeding to the Summit website. During your exploration of our site, please feel free to comment on any of the seminars. Thanks so much for your participation and feedback. 
 ';
-  $view->page_header_format = '1';
-  $view->page_footer = '<?php
+$view->page_header_format = '4';
+$view->page_footer = '<?php
 $view = views_get_view(\'cod_conferences_past\');
 $view = views_build_view(\'embed\', $view, array(), NULL, NULL);
 $output = \'<h2>Past Conferences</h2>\';
 $output .= $view;
 echo $output;
 ?>';
-  $view->page_footer_format = '2';
-  $view->page_empty = '';
-  $view->page_empty_format = '1';
-  $view->page_type = 'table';
-  $view->url = 'conferences';
-  $view->use_pager = TRUE;
-  $view->nodes_per_page = '5';
-  $view->menu = TRUE;
-  $view->menu_title = 'Conferences';
-  $view->menu_tab = FALSE;
-  $view->menu_tab_weight = '0';
-  $view->menu_tab_default = FALSE;
-  $view->menu_tab_default_parent = NULL;
-  $view->menu_tab_default_parent_type = 'tab';
-  $view->menu_parent_tab_weight = '0';
-  $view->menu_parent_title = '';
-  $view->sort = array (
-    array (
-      'tablename' => 'node_data_field_start',
-      'field' => 'field_start_value',
-      'sortorder' => 'DESC',
-      'options' => '',
-    ),
+$view->page_footer_format = '2';
+$view->page_empty = '';
+$view->page_empty_format = '4';
+$view->page_type = 'table';
+$view->url = 'conferences';
+$view->use_pager = TRUE;
+$view->nodes_per_page = '5';
+$view->menu = TRUE;
+$view->menu_title = 'Conferences';
+$view->menu_tab = FALSE;
+$view->menu_tab_weight = '0';
+$view->menu_tab_default = FALSE;
+$view->menu_tab_default_parent = NULL;
+$view->menu_parent_tab_weight = '0';
+$view->menu_parent_title = '';
+$view->sort = array (
+  array (
+    'tablename' => 'node_data_field_start',
+    'field' => 'field_start_value',
+    'sortorder' => 'DESC',
+    'options' => '',
+  ),
+);
+$view->argument = array (
+);
+$view->field = array (
+  array (
+    'tablename' => 'node_data_field_cod_logo',
+    'field' => 'field_cod_logo_fid',
+    'label' => 'Logo',
+    'handler' => 'content_views_field_handler_group',
+    'options' => 'default',
+  ),
+  array (
+    'tablename' => 'node',
+    'field' => 'title',
+    'label' => 'Title',
+    'handler' => 'views_handler_field_nodelink',
+    'options' => 'link',
+  ),
+  array (
+    'tablename' => 'node_data_field_start',
+    'field' => 'field_start_value',
+    'label' => 'Start',
+    'handler' => 'content_views_field_handler_group',
+    'options' => 'short',
+  ),
+  array (
+    'tablename' => 'node_data_field_end',
+    'field' => 'field_end_value',
+    'label' => 'End',
+    'handler' => 'content_views_field_handler_group',
+    'options' => 'short',
+  ),
   );
-  $view->argument = array (
-  );
-  $view->field = array (
-    array (
-      'tablename' => 'node_data_field_cod_logo',
-      'field' => 'field_cod_logo_fid',
-      'label' => 'Logo',
-      'handler' => 'content_views_field_handler_group',
-      'options' => 'default',
+$view->filter = array (
+  array (
+    'tablename' => 'node',
+    'field' => 'type',
+    'operator' => 'OR',
+    'options' => '',
+    'value' => array (
+      0 => 'webform',
     ),
-    array (
-      'tablename' => 'node',
-      'field' => 'title',
-      'label' => 'Title',
-      'handler' => 'views_handler_field_nodelink',
-      'options' => 'link',
-    ),
-    array (
-      'tablename' => 'node_data_field_start',
-      'field' => 'field_start_value',
-      'label' => 'Start',
-      'handler' => 'content_views_field_handler_group',
-      'options' => 'short',
-    ),
-    array (
-      'tablename' => 'node_data_field_end',
-      'field' => 'field_end_value',
-      'label' => 'End',
-      'handler' => 'content_views_field_handler_group',
-      'options' => 'short',
-    ),
-  );
-  $view->filter = array (
-    array (
-      'tablename' => 'node',
-      'field' => 'type',
-      'operator' => 'OR',
-      'options' => '',
-      'value' => array (
-  0 => 'webform',
-),
-    ),
-    array (
-      'tablename' => 'node_data_field_end',
-      'field' => 'field_end_value_default',
-      'operator' => '>=',
-      'options' => '',
-      'value' => '',
-    ),
-  );
-  $view->exposed_filter = array (
-  );
-  $view->requires = array(node_data_field_start, node_data_field_cod_logo, node, node_data_field_end);
-  $views[$view->name] = $view;
-  views_sanitize_view($view);
-  drupal_execute('views_edit_view', array(), $view, '');
+  ),
+  array (
+    'tablename' => 'node_data_field_end',
+    'field' => 'field_end_value_default',
+    'operator' => '>=',
+    'options' => '',
+    'value' => 'now',
+  ),
+);
+$view->exposed_filter = array (
+);
+$view->requires = array(node_data_field_start, node_data_field_cod_logo, node, node_data_field_end);
+$views[$view->name] = $view;
+views_sanitize_view($view);
+drupal_execute('views_edit_view', array(), $view, '');
 
 $view = new stdClass();
 $view->name = 'cod_home';
@@ -1690,7 +1687,7 @@ $view->page_type = 'table';
 $view->url = 'conferences/past';
 $view->use_pager = TRUE;
 $view->nodes_per_page = '5';
-$view->menu = TRUE;
+$view->menu = FALSE;
 $view->menu_title = 'Conferences';
 $view->menu_tab = FALSE;
 $view->menu_tab_weight = '0';
@@ -1728,14 +1725,14 @@ $view->field = array (
     'field' => 'field_start_value',
     'label' => 'Start',
     'handler' => 'content_views_field_handler_group',
-    'options' => 'default',
+    'options' => 'short',
   ),
   array (
     'tablename' => 'node_data_field_end',
     'field' => 'field_end_value',
     'label' => 'End',
     'handler' => 'content_views_field_handler_group',
-    'options' => 'default',
+    'options' => 'short',
   ),
   );
 $view->filter = array (
@@ -1766,9 +1763,8 @@ drupal_execute('views_edit_view', array(), $view, '');
 // Make some Database changes
 db_query("update {view_filter} set value = '1' where field = 'node_data_field_scheduled.field_scheduled_value_default';");
 db_query("update {view_filter} set value = '1' where field = 'node_data_field_front_page.field_front_page_value_default';");
-db_query("update {view_view} set page_empty_format = '2' where name = 'cod_conferences' or name = 'cod_discussions' or name = 'cod_sessions_links';");
-db_query("update {view_tablefield} set handler = 'content_views_field_handler_group' where tablename in ('node_data_field_start', 'node_data_field_end', 'node_data_field_cod_logo');");
-db_query("update {view_tablefield} set options = 'default' where tablename in ('node_data_field_start', 'node_data_field_end', 'node_data_field_cod_logo');");
+db_query("update {view_view} set page_empty_format = '2' where name = 'cod_discussions' or name = 'cod_sessions_links';");
+db_query("update {view_view} set page_footer_format = '2' where name = 'cod_conferences' or name = 'cod_conferences_past';");
 
   // Variables
   // ---------
@@ -2286,6 +2282,9 @@ variable_set('site_name', st('Drupal Conference Organizing Website'));
 // Front page
 variable_set('site_frontpage', 'home');
 
+// Set up Admin User
+install_add_user('admin', 'admin', 'admin@admin.com', $roles = array(), $status = 1);
+$user = user_authenticate('admin', 'admin');
 $edit = array();
 conference_organizing_bio_create_profile($user, $edit);
 $bio = node_load(bio_for_user(1));
