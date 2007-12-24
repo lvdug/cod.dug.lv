@@ -32,7 +32,7 @@ function cod_profile_modules() {
     'og', 
 
     /* Other */
-    'bio', 'chatroom', 'date_api', 'logintoboggan', 'pathauto', 'pearwiki_filter', 'update_status', 'webform', 'wikitools', 
+    'bio', 'chatroom', 'date_api', 'logintoboggan', 'pearwiki_filter', 'update_status', 'webform', 'wikitools', 
 
     /* Taxonomy */
     'tagadelic', 
@@ -294,7 +294,7 @@ foreach ($types as $name => $file) {
       45 => ' administer organic groups',
       46 => ' administer url aliases',
       47 => ' create url aliases',
-      48 => ' administer pathauto',
+      // 48 => ' administer pathauto',
       49 => ' access administration pages',
       50 => ' administer site configuration',
       51 => ' select different theme',
@@ -1950,39 +1950,39 @@ variable_set('og_request_user_subject', 'Subscription request for \'@group\' fro
 variable_set('og_visibility', '0');
 variable_set('og_visibility_directory', '2');
 variable_set('og_visibility_registration', '3');
-variable_set('pathauto_ignore_words', 'a,an,as,at,before,but,by,for,from,is,in,into,like,of,off,on,onto,per,since,than,the,this,that,to,up,via,with');
-variable_set('pathauto_indexaliases', 0);
-variable_set('pathauto_indexaliases_bulkupdate', false);
-variable_set('pathauto_max_component_length', '100');
-variable_set('pathauto_max_length', '100');
-variable_set('pathauto_modulelist', array (
-    0 => 'node',
-    1 => 'taxonomy',
-    2 => 'user',
-));
-variable_set('pathauto_node_applytofeeds', 0);
-variable_set('pathauto_node_bio_pattern', '');
-variable_set('pathauto_node_bulkupdate', false);
-variable_set('pathauto_node_page_pattern', '');
-variable_set('pathauto_node_pattern', '[title]');
-variable_set('pathauto_node_session_pattern', 'session/[title]');
-variable_set('pathauto_node_supportsfeeds', 'feed');
-variable_set('pathauto_node_webform_pattern', 'conference/[title]');
-variable_set('pathauto_quotes', '0');
-variable_set('pathauto_separator', '-');
-variable_set('pathauto_taxonomy_applytofeeds', 0);
-variable_set('pathauto_taxonomy_bulkupdate', 0);
-variable_set('pathauto_taxonomy_pattern', '[vocab]/[catpath]');
-variable_set('pathauto_taxonomy_supportsfeeds', '0/feed');
-variable_set('pathauto_update_action', '2');
-variable_set('pathauto_user_bulkupdate', 0);
-variable_set('pathauto_user_pattern', 'user/[user]');
-variable_set('pathauto_user_supportsfeeds', NULL);
-variable_set('pathauto_verbose', 0);
-variable_set('pathauto_version', array (
-    'text' => '2005-9-18',
-    'build' => 5,
-));
+// variable_set('pathauto_ignore_words', 'a,an,as,at,before,but,by,for,from,is,in,into,like,of,off,on,onto,per,since,than,the,this,that,to,up,via,with');
+// variable_set('pathauto_indexaliases', 0);
+// variable_set('pathauto_indexaliases_bulkupdate', false);
+// variable_set('pathauto_max_component_length', '100');
+// variable_set('pathauto_max_length', '100');
+// variable_set('pathauto_modulelist', array (
+//    0 => 'node',
+//    1 => 'taxonomy',
+//    2 => 'user',
+// ));
+// variable_set('pathauto_node_applytofeeds', 0);
+// variable_set('pathauto_node_bio_pattern', '');
+// variable_set('pathauto_node_bulkupdate', false);
+// variable_set('pathauto_node_page_pattern', '');
+// variable_set('pathauto_node_pattern', '[title]');
+// variable_set('pathauto_node_session_pattern', 'session/[title]');
+// variable_set('pathauto_node_supportsfeeds', 'feed');
+// variable_set('pathauto_node_webform_pattern', 'conference/[title]');
+// variable_set('pathauto_quotes', '0');
+// variable_set('pathauto_separator', '-');
+// variable_set('pathauto_taxonomy_applytofeeds', 0);
+// variable_set('pathauto_taxonomy_bulkupdate', 0);
+// variable_set('pathauto_taxonomy_pattern', '[vocab]/[catpath]');
+// variable_set('pathauto_taxonomy_supportsfeeds', '0/feed');
+// variable_set('pathauto_update_action', '2');
+// variable_set('pathauto_user_bulkupdate', 0);
+// variable_set('pathauto_user_pattern', 'user/[user]');
+// variable_set('pathauto_user_supportsfeeds', NULL);
+// variable_set('pathauto_verbose', 0);
+// variable_set('pathauto_version', array (
+//     'text' => '2005-9-18',
+//     'build' => 5,
+// ));
 
 // Pearwiki Stuff
 // Remove roles from ‘Filtered HTML’ 
