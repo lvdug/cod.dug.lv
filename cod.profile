@@ -1828,7 +1828,7 @@ variable_set('filter_html_help_1', 0);
 variable_set('filter_html_nofollow_1', 0);
 variable_set('filter_url_length_1', '72');
 variable_set('install_profile', 'default');
-variable_set('jscalendar_css', 'sites/all/modules/jstools/jscalendar/lib/calendar-win2k-2.css');
+variable_set('jscalendar_css', 'profiles/cod/modules/jstools/jscalendar/lib/calendar-win2k-2.css');
 variable_set('location_addanother_bio', 0);
 variable_set('location_addanother_discussion', 0);
 variable_set('location_addanother_group', 0);
