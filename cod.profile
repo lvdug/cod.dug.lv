@@ -20,6 +20,7 @@ function cod_profile_modules() {
     'help',
     'menu',
     'taxonomy',
+    'path',
     // Contrib:
     'content',
     'content_permissions',
@@ -53,6 +54,7 @@ function cod_profile_modules() {
     'globalredirect',
     'path_redirect',
     'comment_notify',
+    'context',
   );
 }
 
