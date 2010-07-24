@@ -31,6 +31,8 @@ function cod_profile_modules() {
     'filefield',
     'imagefield',
     'imageapi',
+    'imagecache',
+    'imagecache_ui',
     'date_api',
     'date',
     'date_popup',
