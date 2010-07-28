@@ -22,6 +22,7 @@ function cod_profile_modules() {
     'taxonomy',
     'path',
     // Contrib:
+    'token',
     'content',
     'content_permissions',
     'fieldgroup',
