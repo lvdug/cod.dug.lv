@@ -49,5 +49,25 @@ projects[uc_signup][version] = 1.0-beta5
 projects[ubercart][subdir] = contrib
 projects[ubercart][version] = 2.2
 
-projects[cod_support][subdir] = contrib
+projects[diff][subdir] = contrib
+projects[diff][version] = 2.0
+
+projects[admin][subdir] = contrib
+projects[admin][version] = 2.0-beta5
+
+projects[pathauto][subdir] = contrib
+projects[pathauto][version] = 1.3
+
+projects[globalredirect][subdir] = contrib
+projects[globalredirect][version] = 1.2
+
+projects[path_redirect][subdir] = contrib
+projects[path_redirect][version] = 1.0-beta6
+
+projects[comment_notify][subdir] = contrib
+projects[comment_notify][version] = 1.4
+
+projects[cod_support][subdir] = features
 projects[cod_support][version] = 1.0-alpha1
+
+
