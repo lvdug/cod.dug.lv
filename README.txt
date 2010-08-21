@@ -36,69 +36,10 @@ FEATURES
 PREPARATION
 -----------------------------------------------------------------------------------------
 
-STEP 1...
-  Download Drupal 5.x (http://drupal.org/download), and upload it on your server. 
-  Don't install it yet, we first must prepare it for installation.  
+Download the cod package (which includes Drupal core and all the required modules).
+If you're reading this, you probably already did that, but just in case...
 
-  
-  
-STEP 2...
-  Place the profile files in the directory 'profiles/cod'.
-  
-  
-  
-STEP 3...
-  Download the following modules and put them in the directory 'profiles/cod/modules':
-  Make sure that the module version is compatible with the Drupal version.
-  
-akismet                   http://drupal.org/project/akismet
-bio                       http://drupal.org/project/bio
-cck                       http://drupal.org/project/cck
-chatroom                  http://drupal.org/project/chatroom
-conference_organizing     http://drupal.org/project/conference_organizing
-date                      http://drupal.org/project/conference_organizing
-imagefield                http://drupal.org/project/imagefield
-jstools                   http://drupal.org/project/jstools
-link                      http://drupal.org/project/link
-location                  http://drupal.org/project/location
-logintoboggan             http://drupal.org/project/logintoboggan
-moduleweight              http://drupal.org/project/moduleweight
-og                        http://drupal.org/project/og
-pathauto                  http://drupal.org/project/pathauto
-pearwiki_filter           http://drupal.org/project/pearwiki_filter
-tagadelic                 http://drupal.org/project/tagadelic
-tagadelic_views           http://drupal.org/project/tagadelic_views
-update_status             http://drupal.org/project/update_status
-views                     http://drupal.org/project/views
-views_fastsearch          http://drupal.org/project/views_fastsearch
-vote_up_down              http://drupal.org/project/vote_up_down
-votingapi                 http://drupal.org/project/votingapi
-webform                   http://drupal.org/project/webform
-wikitools                 http://drupal.org/project/wikitools
-
-
-
-STEP 4...
-  Download the custom theme and put it in the directory 'profiles/cod/themes'
-  This theme works directly with the conference organizing module and profile.
-  
-cod_organizing            http://drupal.org/project/cod_organizing          
-
-
-
-STEP 5...
-  Create the directory 'files/pictures' within your Drupal directory.  This
-  directory is used by modules and needs to exist before installation.
-  
-  
-STEP 6...
-  The pearwiki module requires you to install the pear wiki package.  Here is how to install it
-  via the command line.
-
-Go to the 'profiles/cod/modules/pearwiki_filter' directory and execute the command:
-
-cvs -d :pserver:cvsread@cvs.php.net:/repository checkout -d Text pear/Text_Wiki/Text
-
+  http://drupal.org/project/cod
 
 
 INSTALLATION
