@@ -21,6 +21,7 @@ function cod_profile_modules() {
     'menu',
     'taxonomy',
     'path',
+	'profile',
     // Contrib:
     'token',
     'content',
