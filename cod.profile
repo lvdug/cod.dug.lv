@@ -35,6 +35,7 @@ function cod_profile_modules() {
     'imageapi',
     'imagecache',
     'imagecache_ui',
+    'jquery_ui',
     'date_api',
     'date',
     'date_popup',
