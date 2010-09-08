@@ -3,6 +3,9 @@
 ; Required version of Drupal core.
 core = 6.x
 
+; The following line is removed for the d.o hosted version, but allows this to run in drush make in general without the --drupal-org switch.
+projects[drupal] = 6.19
+
 ; Required versions of Drupal contributed projects.
 projects[admin][subdir] = contrib
 
@@ -11,6 +14,7 @@ projects[cck][subdir] = contrib
 projects[comment_notify][subdir] = contrib
 
 projects[context][subdir] = contrib
+projects[context][version] = 2.0
 
 projects[date][subdir] = contrib
 
@@ -33,6 +37,8 @@ projects[imageapi][subdir] = contrib
 
 projects[imagecache][subdir] = contrib
 
+projects[jquery_ui][subdir] = contrib
+
 projects[markdown][subdir] = contrib
 
 projects[pathauto][subdir] = contrib
@@ -51,4 +57,13 @@ projects[views][subdir] = contrib
 
 ; COD feature modules.
 projects[cod_support][subdir] = features
+projects[cod_support][version] = 1.0-alpha1
+
+
+
+; Libraries
+libraries[jquery_ui][download][type] = "get"
+libraries[jquery_ui][destination] = "modules/contrib/jquery_ui"
+libraries[jquery_ui][download][url] = "http://jquery-ui.googlecode.com/files/jquery.ui-1.6.zip"
+libraries[jquery_ui][directory_name] = "jquery.ui"
 
