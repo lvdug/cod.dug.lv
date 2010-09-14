@@ -21,8 +21,14 @@ function cod_profile_modules() {
     'menu',
     'taxonomy',
     'path',
-	'profile',
+    'profile',
     // Contrib:
+    'admin',
+    'pathauto',
+    'globalredirect',
+    'path_redirect',
+    'comment_notify',
+    'context',
     'token',
     'content',
     'content_permissions',
@@ -32,13 +38,17 @@ function cod_profile_modules() {
     'text',
     'filefield',
     'imagefield',
+    'userreference',
     'imageapi',
+    'imageapi_gd',
     'imagecache',
     'imagecache_ui',
     'jquery_ui',
     'date_api',
     'date',
     'date_popup',
+    'date_tools',
+    'date_timezone',
     'views',
     'views_ui',
     'signup',
@@ -57,12 +67,6 @@ function cod_profile_modules() {
     'cod_front_page',
     'cod_news',
     'cod_sponsors',
-    'admin',
-    'pathauto',
-    'globalredirect',
-    'path_redirect',
-    'comment_notify',
-    'context',
   );
 }
 
@@ -92,3 +96,4 @@ function cod_profile_final() {
   // showing up with incorrect dates.
   variable_set('configurable_timezones', 0);
 }
+
