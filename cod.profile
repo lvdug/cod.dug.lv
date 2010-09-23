@@ -57,6 +57,7 @@ function cod_profile_modules() {
     'ca',
     'uc_order',
     'uc_store',
+    'uc_payment',
     'uc_product',
     'uc_signup',
     'flag',
