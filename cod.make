@@ -14,7 +14,10 @@ projects[cck][subdir] = contrib
 projects[comment_notify][subdir] = contrib
 
 projects[context][subdir] = contrib
-projects[context][version] = 2.0
+projects[context][version] = 3.0
+
+projects[ctools][subdir] = contrib
+projects[ctools][version] = 1.7
 
 projects[date][subdir] = contrib
 

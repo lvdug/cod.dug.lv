@@ -29,6 +29,7 @@ function cod_profile_modules() {
     'path_redirect',
     'comment_notify',
     'context',
+    'ctools',
     'token',
     'content',
     'content_permissions',
