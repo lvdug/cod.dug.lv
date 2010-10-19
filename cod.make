@@ -11,6 +11,8 @@ projects[admin][subdir] = contrib
 
 projects[cck][subdir] = contrib
 
+projects[auto_nodetitle][subdir] = contrib
+
 projects[comment_notify][subdir] = contrib
 
 projects[context][subdir] = contrib
@@ -19,9 +21,17 @@ projects[context][version] = 3.0
 projects[ctools][subdir] = contrib
 projects[ctools][version] = 1.7
 
+projects[strongarm][subdir] = contrib
+
+projects[link][subdir] = contrib
+
 projects[date][subdir] = contrib
 
 projects[diff][subdir] = contrib
+
+projects[checkbox_validate][subdir] = contrib
+
+projects[emfield][subdir] = contrib
 
 projects[flag][subdir] = contrib
 projects[flag][version] = 2.0-beta3
