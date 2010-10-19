@@ -99,8 +99,5 @@ function cod_profile_details() {
 *   screen.
 */
 function cod_profile_final() {
-  // Disable user-configurable timezones to prevent conference events from
-  // showing up with incorrect dates.
-  variable_set('configurable_timezones', 0);
 }
 
