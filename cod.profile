@@ -39,6 +39,7 @@ function cod_profile_modules() {
     'text',
     'filefield',
     'imagefield',
+    'nodereference'
     'userreference',
     'imageapi',
     'imageapi_gd',
