@@ -101,3 +101,13 @@ function cod_profile_details() {
 function cod_profile_final() {
 }
 
+/**
+ * Implements hook_form_alter().
+ * Set COD as the default profile.
+ * (copied from Atrium: We use system_form_form_id_alter, otherwise we cannot alter forms.)
+ */
+function system_form_install_select_profile_form_alter(&$form, $form_state) {
+  foreach ($form['profile'] as $key => $element) {
+    $form['profile'][$key]['#value'] = 'cod';
+  }
+}
