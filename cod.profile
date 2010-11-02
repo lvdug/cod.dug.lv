@@ -68,6 +68,7 @@ function cod_profile_modules() {
     'flag',
     'features',
     'diff',
+    'cod_base',
     'cod_session',
     'cod_events',
     'cod_attendees',
