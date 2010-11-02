@@ -90,6 +90,51 @@ function cod_profile_details() {
   );
 }
 
+/**
+ * Implementation of hook_profile_task_list().
+ */
+function cod_profile_task_list() {
+  $tasks['cod-cleanup'] = st('Cleanup tasks');
+  return $tasks;
+}
+
+/**
+ * Implementation of hook_profile_tasks().
+ */
+function cod_profile_tasks(&$task, $url) {
+  $output = '';
+
+  // The profile task is called first, no matter what.
+  if ($task == 'profile') {
+    // Set the final task before profile-finished.
+    $task = 'cod-cleanup';
+  }
+
+  // Our final task, clear caches and revert features.
+  if ($task == 'cod-cleanup') {
+    // This isn't actually necessary as there are no node_access() entries,
+    // but we run it to prevent the "rebuild node access" message from being
+    // shown on install.
+    node_access_rebuild();
+
+    // Rebuild key tables/caches
+    drupal_flush_all_caches();
+
+    // Revert features to be sure everything is setup correctly.
+    $revert = array(
+      'cod_attendees' => array('variable'),
+      'cod_events' => array('variable'),
+      'cod_news' => array('variable'),
+      'cod_session' => array('variable'),
+      'cod_sponsors' => array('variable'),
+    );
+    features_revert($revert);
+
+    // Inform installation we are done.
+    $task = 'profile-finished';
+  }
+  return $output;
+}
 
 /**
 * Perform any final installation tasks for this profile.
