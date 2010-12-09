@@ -6,7 +6,6 @@
 *  An array of modules to be enabled.
 */
 function cod_profile_modules() {
-
   return array(
     // Enable required core modules first.
     'block',
@@ -68,13 +67,7 @@ function cod_profile_modules() {
     'flag',
     'features',
     'diff',
-    'cod_base',
-    'cod_session',
-    'cod_events',
-    'cod_attendees',
-    'cod_front_page',
-    'cod_news',
-    'cod_sponsors',
+    // COD features are installed during a profile task.
   );
 }
 
@@ -92,9 +85,25 @@ function cod_profile_details() {
 }
 
 /**
+ * Helper function defines the COD modules.
+ */
+function _cod_profile_modules() {
+  return array(
+    'cod_base',
+    'cod_session',
+    'cod_events',
+    'cod_attendees',
+    'cod_front_page',
+    'cod_news',
+    'cod_sponsors',
+  );
+}
+
+/**
  * Implementation of hook_profile_task_list().
  */
 function cod_profile_task_list() {
+  $tasks['cod-modules-batch'] = st('Setup COD features');
   $tasks['cod-cleanup'] = st('Cleanup tasks');
   return $tasks;
 }
@@ -105,10 +114,69 @@ function cod_profile_task_list() {
 function cod_profile_tasks(&$task, $url) {
   $output = '';
 
-  // The profile task is called first, no matter what.
+  // The profile task is called first.
   if ($task == 'profile') {
-    // Set the final task before profile-finished.
-    $task = 'cod-cleanup';
+    // Begin by creating the page content type.
+    $task = 'create-page-type';
+  }
+
+  // Create a page content type.
+  if ($task == 'create-page-type') {
+    $type = array(
+      'type' => 'page',
+      'name' => st('Page'),
+      'module' => 'node',
+      'description' => st("Use the <em>Page</em> content type for mostly static content like the \"About us\" section of a website. By default, a <em>page</em> entry does not allow comments and is not featured on the site's home page."),
+      'custom' => TRUE,
+      'modified' => TRUE,
+      'locked' => FALSE,
+      'help' => '',
+      'min_word_count' => '',
+    );
+
+    $type = (object) _node_type_set_defaults($type);
+    node_type_save($type);
+
+    // Default page to not be promoted and have comments disabled.
+    variable_set('node_options_page', array('status'));
+    variable_set('comment_page', COMMENT_NODE_DISABLED);
+  
+    // Don't display date and author information for page nodes by default.
+    $theme_settings = variable_get('theme_settings', array());
+    $theme_settings['toggle_node_info_page'] = FALSE;
+    variable_set('theme_settings', $theme_settings);
+
+    // Update the menu router information.
+    menu_rebuild();
+
+    // Next is the COD features install task.
+    $task = 'cod-modules';
+  }
+
+  // Install some more modules and maybe localization helpers too
+  if ($task == 'cod-modules') {
+    $modules = _cod_profile_modules();
+    $files = module_rebuild_cache();
+    // Create batch
+    foreach ($modules as $module) {
+      $batch['operations'][] = array('_install_module_batch', array($module, $files[$module]->info['name']));
+    }    
+    $batch['finished'] = '_cod_profile_batch_finished'; // The finish op will set the next task.
+    $batch['title'] = st('Installing @drupal', array('@drupal' => drupal_install_profile_name()));
+    $batch['error_message'] = st('The installation has encountered an error.');
+
+    // Start a batch, switch to 'cod-modules-batch' task. We need to
+    // set the variable here, because batch_process() redirects.
+    variable_set('install_task', 'cod-modules-batch');
+    batch_set($batch);
+    batch_process($url, $url);
+    // Jut for cli installs. We'll never reach here on interactive installs.
+    return;
+  }
+  // We are running a batch task for this profile so basically do nothing and return page
+  if ($task == 'cod-modules-batch') {
+    include_once 'includes/batch.inc';
+    $output = _batch_page();
   }
 
   // Our final task, clear caches and revert features.
@@ -123,6 +191,7 @@ function cod_profile_tasks(&$task, $url) {
 
     // Revert features to be sure everything is setup correctly.
     $revert = array(
+      'cod_base' => array('variable'),
       'cod_attendees' => array('variable'),
       'cod_events' => array('variable'),
       'cod_news' => array('variable'),
@@ -138,6 +207,15 @@ function cod_profile_tasks(&$task, $url) {
 }
 
 /**
+ * Finished callback for the modules install batch.
+ *
+ * Advance installer task to cod-cleanup.
+ */
+function _cod_profile_batch_finished($success, $results) {
+  variable_set('install_task', 'cod-cleanup');
+}
+
+/**
 * Perform any final installation tasks for this profile.
 *
 * @return
@@ -145,6 +223,7 @@ function cod_profile_tasks(&$task, $url) {
 *   screen.
 */
 function cod_profile_final() {
+  
 }
 
 /**
