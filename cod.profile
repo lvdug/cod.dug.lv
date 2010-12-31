@@ -67,6 +67,8 @@ function cod_profile_modules() {
     'flag',
     'features',
     'diff',
+    'uuid',
+    'uuid_features',
     // COD features are installed during a profile task.
   );
 }
