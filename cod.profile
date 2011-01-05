@@ -69,6 +69,7 @@ function cod_profile_modules() {
     'diff',
     'uuid',
     'uuid_features',
+    'skinr',
     // COD features are installed during a profile task.
   );
 }
@@ -142,7 +143,6 @@ function cod_profile_tasks(&$task, $url) {
     // Default page to not be promoted and have comments disabled.
     variable_set('node_options_page', array('status'));
     variable_set('comment_page', COMMENT_NODE_DISABLED);
-  
     // Don't display date and author information for page nodes by default.
     $theme_settings = variable_get('theme_settings', array());
     $theme_settings['toggle_node_info_page'] = FALSE;
@@ -190,7 +190,10 @@ function cod_profile_tasks(&$task, $url) {
 
     // Rebuild key tables/caches
     drupal_flush_all_caches();
-
+    // Set acquia_prosper as the default theme.
+    db_query("UPDATE {system} SET status = 1 WHERE type = 'theme' and name ='%s'", 'fusion_core');
+    db_query("UPDATE {system} SET status = 1 WHERE type = 'theme' and name ='%s'", 'acquia_prosper');
+    variable_set('theme_default', 'acquia_prosper');
     // Revert features to be sure everything is setup correctly.
     $revert = array(
       'cod_base' => array('variable'),
