@@ -70,7 +70,7 @@ projects[views][subdir] = contrib
 
 ; COD feature modules.
 projects[cod_support][subdir] = features
-projects[cod_support][version] = 1.0-alpha1
+projects[cod_support][version] = 1.0-alpha2
 
 
 
