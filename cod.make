@@ -38,7 +38,17 @@ projects[flag][version] = 2.0-beta3
 ; http://drupal.org/node/846826
 projects[flag][patch][] = "http://drupal.org/files/issues/flag_features_export.patch"
 
+; CVS checkout of Features 6.x-1.x
 projects[features][subdir] = contrib
+projects[features][download][type] = "cvs"
+projects[features][download][module] = "contributions/modules/features/"
+projects[features][download][revision] = "DRUPAL-6--1"
+; http://drupal.org/node/968826#comment-3863422
+projects[features][patch][] = "http://drupal.org/files/issues/968826-features-menu-uuid.patch"
+; http://drupal.org/node/912716#comment-3899924
+projects[features][patch][] ="http://drupal.org/files/issues/features-profile-fields-912716-11.patch"
+; http://drupal.org/node/860974#comment-3505484
+projects[features][patch][] = "http://drupal.org/files/issues/features.860974.patch"
 
 projects[filefield][subdir] = contrib
 
