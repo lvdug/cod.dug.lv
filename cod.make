@@ -1,10 +1,10 @@
 ; Conference Organizing Install Profile makefile
-
+api = 2
 ; Required version of Drupal core.
 core = 6.x
 
 ; The following line is removed for the d.o hosted version, but allows this to run in drush make in general without the --drupal-org switch.
-projects[drupal] = 6.19
+projects[drupal] = 6.20
 
 ; Required versions of Drupal contributed projects.
 projects[admin][subdir] = contrib
@@ -68,20 +68,44 @@ projects[pathauto][subdir] = contrib
 
 projects[path_redirect][subdir] = contrib
 
+projects[skinr][subdir] = contrib
+
 projects[signup][subdir] = contrib
+
+projects[skinr][subdir = contrib
 
 projects[token][subdir] = contrib
 
 projects[uc_signup][subdir] = contrib
 
+projects[uuid][subdir] = contrib
+projects[uuid][download][type] = "cvs"
+projects[uuid][download][module] = "contributions/modules/uuid/"
+projects[uuid][download][revision] = "DRUPAL-6--1"
+
+projects[uuid_features][subdir] = contrib
+projects[uuid_features][download][type] = "cvs"
+projects[uuid_features][download][module] = "contributions/modules/uuid_features/"
+projects[uuid_features][download][revision] = "DRUPAL-6--1"
+
 projects[ubercart][subdir] = contrib
 
 projects[views][subdir] = contrib
 
+projects[acquia_prosper][type] = theme
+projects[acquia_prosper][subdir] = themes
+
+projects[fusion][type] = theme
+projects[fusion][download][type] = cvs
+projects[fusion][download][module] = "contributions/themes/fusion"
+projects[fusion][download][revision] = DRUPAL-6--1
+; http://drupal.org/node/1012882
+projects[fusion][patch][] = "http://drupal.org/files/issues/fusion-preprocess-node-content.patch"
+
 ; COD feature modules.
 projects[cod_support][subdir] = features
 projects[cod_support][version] = 1.0-alpha2
-
+; 
 
 
 ; Libraries
