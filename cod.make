@@ -33,6 +33,8 @@ projects[checkbox_validate][subdir] = contrib
 
 projects[emfield][subdir] = contrib
 
+projects[fasttoggle][subdir] = contrib
+
 projects[flag][subdir] = contrib
 projects[flag][version] = 2.0-beta3
 ; http://drupal.org/node/846826
