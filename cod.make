@@ -105,6 +105,7 @@ projects[fusion][download][revision] = DRUPAL-6--1
 projects[fusion][patch][] = "http://drupal.org/files/issues/fusion-preprocess-node-content.patch"
 
 ; COD feature modules.
+projects[cod_support][subdir] = contrib 
 projects[cod_support][version] = 1.0-alpha2
 ; 
 
