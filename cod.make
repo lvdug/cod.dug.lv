@@ -89,7 +89,8 @@ projects[uuid_features][subdir] = contrib
 projects[uuid_features][download][type] = "cvs"
 projects[uuid_features][download][module] = "contributions/modules/uuid_features/"
 projects[uuid_features][download][revision] = "DRUPAL-6--1"
-
+; http://drupal.org/node/1008496#comment-3995594
+projects[uuid_features][patch][] = "http://drupal.org/files/issues/node-values_0.diff"
 projects[ubercart][subdir] = contrib
 
 projects[views][subdir] = contrib
