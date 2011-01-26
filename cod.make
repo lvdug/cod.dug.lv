@@ -95,6 +95,8 @@ projects[ubercart][subdir] = contrib
 
 projects[views][subdir] = contrib
 
+projects[views_bulk_operations][subdir] = contrib
+
 projects[acquia_prosper][type] = theme
 projects[acquia_prosper][subdir] = themes
 
