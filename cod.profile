@@ -95,7 +95,7 @@ function _cod_profile_modules() {
     'cod_base',
     'cod_session',
     'cod_events',
-    'cod_attendees',
+    'cod_community',
     'cod_front_page',
     'cod_news',
     'cod_sponsors',
@@ -106,7 +106,7 @@ function _cod_profile_modules() {
  * Implementation of hook_profile_task_list().
  */
 function cod_profile_task_list() {
-  $tasks['cod-modules-batch'] = st('Setup COD features');
+  $tasks['cod-modules-batch'] = st('Set up COD features');
   $tasks['cod-cleanup'] = st('Cleanup tasks');
   return $tasks;
 }
@@ -197,7 +197,7 @@ function cod_profile_tasks(&$task, $url) {
     // Revert features to be sure everything is setup correctly.
     $revert = array(
       'cod_base' => array('variable'),
-      'cod_attendees' => array('variable'),
+      'cod_community' => array('variable'),
       'cod_events' => array('variable'),
       'cod_news' => array('variable'),
       'cod_session' => array('variable'),
