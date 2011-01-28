@@ -109,7 +109,7 @@ projects[fusion][patch][] = "http://drupal.org/files/issues/fusion-preprocess-no
 
 ; COD feature modules.
 projects[cod_support][subdir] = contrib 
-projects[cod_support][version] = 1.0-alpha2
+projects[cod_support][version] = 1.0-alpha3
 ; 
 
 
