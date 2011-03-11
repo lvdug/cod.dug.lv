@@ -1,4 +1,8 @@
-; Conference Organizing Install Profile makefile
+; Conference Organizing Distribution dev snapshot makefile
+; The purpose of this makefile is to make it easier for people to install
+; the dev version of COD and its dependencies, including patches, before
+; a new full release of the distribution is rolled.  
+
 api = 2
 core = 6.x
 
@@ -85,7 +89,6 @@ projects[uuid_features][subdir] = contrib
 projects[uuid_features][download][type] = "git"
 projects[uuid_features][download][url] = "http://git.drupal.org/project/uuid_features.git"
 projects[uuid_features][download][revision] = "6.x-1.x"
-
 ; http://drupal.org/node/1008496#comment-3995594
 projects[uuid_features][patch][] = "http://drupal.org/files/issues/node-values_0.diff"
 projects[ubercart][subdir] = contrib
@@ -106,9 +109,9 @@ projects[fusion][patch][] = "http://drupal.org/files/issues/fusion-preprocess-no
 
 ; COD feature modules.
 projects[cod_support][subdir] = contrib 
-projects[cod_support][version] = 1.0-alpha3
-; 
-
+projects[cod_support][download][type] = git
+projects[cod_support][download][module] = "http://git.drupal.org/project/cod_support.git"
+projects[cod_support][download][revision] = "master"
 
 ; Libraries
 libraries[jquery_ui][download][type] = "get"
