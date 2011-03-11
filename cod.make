@@ -109,8 +109,8 @@ projects[fusion][patch][] = "http://drupal.org/files/issues/fusion-preprocess-no
 
 ; COD feature modules.
 projects[cod_support][subdir] = contrib 
-projects[fusion][download][url] = "http://git.drupal.org/project/cod_support.git"
-projects[fusion][download][revision] = "master"
+projects[cod_support][download][url] = "http://git.drupal.org/project/cod_support.git"
+projects[cod_support][download][revision] = "master"
 
 ; Libraries
 libraries[jquery_ui][download][type] = "get"
