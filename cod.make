@@ -37,6 +37,7 @@ projects[flag][version] = 2.0-beta3
 projects[flag][patch][] = "http://drupal.org/files/issues/flag_features_export.patch"
 
 ; git checkout of Features 6.x-1.x
+projects[features][subdir] = contrib
 projects[features][download][type] = "git"
 projects[features][download][branch] = "6.x-1.x"
 projects[features][download][url] = "http://git.drupal.org/project/features.git"
@@ -75,11 +76,12 @@ projects[token][subdir] = contrib
 
 projects[uc_signup][subdir] = contrib
 
-
+projects[uuid][subdir] = contrib
 projects[uuid][download][type] = "git"
 projects[uuid][download][url] = "http://git.drupal.org/project/uuid.git"
 projects[uuid][download][revision] = "6.x-1.x"
 
+projects[uuid_features][subdir] = contrib
 projects[uuid_features][download][type] = "git"
 projects[uuid_features][download][url] = "http://git.drupal.org/project/uuid_features.git"
 projects[uuid_features][download][revision] = "6.x-1.x"

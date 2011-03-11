@@ -44,6 +44,7 @@ projects[flag][version] = 2.0-beta3
 projects[flag][patch][] = "http://drupal.org/files/issues/flag_features_export.patch"
 
 ; git checkout of Features 6.x-1.x
+projects[features][subdir] = contrib
 projects[features][download][type] = "git"
 projects[features][download][branch] = "6.x-1.x"
 projects[features][download][url] = "http://git.drupal.org/project/features.git"
