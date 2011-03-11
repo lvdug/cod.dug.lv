@@ -44,11 +44,10 @@ projects[flag][version] = 2.0-beta3
 ; http://drupal.org/node/846826
 projects[flag][patch][] = "http://drupal.org/files/issues/flag_features_export.patch"
 
-; CVS checkout of Features 6.x-1.x
-projects[features][subdir] = contrib
-projects[features][download][type] = "cvs"
-projects[features][download][module] = "contributions/modules/features/"
-projects[features][download][revision] = "DRUPAL-6--1"
+; git checkout of Features 6.x-1.x
+projects[features][download][type] = "git"
+projects[features][download][branch] = "6.x-1.x"
+projects[features][download][url] = "http://git.drupal.org/project/features.git"
 ; http://drupal.org/node/968826#comment-3863422
 projects[features][patch][] = "http://drupal.org/files/issues/968826-features-menu-uuid.patch"
 ; http://drupal.org/node/912716#comment-3899924
@@ -85,14 +84,14 @@ projects[token][subdir] = contrib
 projects[uc_signup][subdir] = contrib
 
 projects[uuid][subdir] = contrib
-projects[uuid][download][type] = "cvs"
-projects[uuid][download][module] = "contributions/modules/uuid/"
-projects[uuid][download][revision] = "DRUPAL-6--1"
+projects[uuid][download][type] = "git"
+projects[uuid][download][url] = "http://git.drupal.org/project/uuid.git"
+projects[uuid][download][revision] = "6.x-1.x"
 
 projects[uuid_features][subdir] = contrib
-projects[uuid_features][download][type] = "cvs"
-projects[uuid_features][download][module] = "contributions/modules/uuid_features/"
-projects[uuid_features][download][revision] = "DRUPAL-6--1"
+projects[uuid_features][download][type] = "git"
+projects[uuid_features][download][url] = "http://git.drupal.org/project/uuid_features.git"
+projects[uuid_features][download][revision] = "6.x-1.x"
 ; http://drupal.org/node/1008496#comment-3995594
 projects[uuid_features][patch][] = "http://drupal.org/files/issues/node-values_0.diff"
 projects[ubercart][subdir] = contrib
@@ -105,17 +104,17 @@ projects[acquia_prosper][type] = theme
 projects[acquia_prosper][subdir] = themes
 
 projects[fusion][type] = theme
-projects[fusion][download][type] = cvs
-projects[fusion][download][module] = "contributions/themes/fusion"
-projects[fusion][download][revision] = DRUPAL-6--1
+projects[fusion][download][type] = git
+projects[fusion][download][url] = "http://git.drupal.org/project/fusion.git"
+projects[fusion][download][revision] = "6.x-1.x"
 ; http://drupal.org/node/1012882
 projects[fusion][patch][] = "http://drupal.org/files/issues/fusion-preprocess-node-content.patch"
 
 ; COD feature modules.
 projects[cod_support][subdir] = contrib 
-projects[cod_support][download][type] = cvs
-projects[cod_support][download][module] = "contributions/modules/cod_support"
-projects[cod_support][download][revision] = HEAD
+projects[cod_support][download][type] = git
+projects[cod_support][download][module] = "http://git.drupal.org/project/cod_support.git"
+projects[cod_support][download][revision] = "master"
 
 ; Libraries
 libraries[jquery_ui][download][type] = "get"
