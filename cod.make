@@ -1,10 +1,5 @@
 ; Conference Organizing Install Profile makefile
 api = 2
-; Required version of Drupal core.
-core = 6.x
-
-; The following line is removed for the d.o hosted version, but allows this to run in drush make in general without the --drupal-org switch.
-projects[drupal] = 6.20
 
 ; Required versions of Drupal contributed projects.
 projects[admin][subdir] = contrib
