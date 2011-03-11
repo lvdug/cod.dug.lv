@@ -6,4 +6,4 @@ projects[drupal] = 6.20
 projects[cod][type] = profile
 projects[cod][download][type] = "git"
 projects[cod][download][url] = "http://git.drupal.org/project/cod.git"
-projects[cod][download][revision] = "6.x-1.x"
+projects[cod][download][revision] = "6.x-1.0-alpha3"
