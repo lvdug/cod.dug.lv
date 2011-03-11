@@ -4,6 +4,7 @@
 ; a new full release of the distribution is rolled.  
 
 api = 2
+core = 6.x
 
 ; The following line is removed for the d.o hosted version, but allows this to run in drush make in general without the --drupal-org switch.
 projects[drupal] = 6.20

@@ -1,5 +1,6 @@
 ; Conference Organizing Install Profile makefile
 api = 2
+core = 6.x
 
 ; Required versions of Drupal contributed projects.
 projects[admin][subdir] = contrib
