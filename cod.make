@@ -88,7 +88,9 @@ projects[uuid_features][download][url] = "http://git.drupal.org/project/uuid_fea
 projects[uuid_features][download][revision] = "7.x-1.x"
 
 projects[commerce][subdir] = contrib
-
+projects[commerce][download][type] = "git"
+projects[commerce][download][url] = http://git.drupal.org/project/commerce.git
+projects[commerce][download][revision] = "7.x-1.x"
 projects[views][subdir] = contrib
 
 projects[views_bulk_operations][subdir] = contrib
@@ -97,7 +99,7 @@ projects[views_bulk_operations][subdir] = contrib
 projects[fusion][type] = theme
 projects[fusion][download][type] = git
 projects[fusion][download][url] = "http://git.drupal.org/project/fusion.git"
-projects[fusion][download][revision] = "7.x-1.x"
+projects[fusion][download][revision] = "master"
 
 ; COD feature modules.
 projects[cod_support][subdir] = contrib 
