@@ -52,7 +52,6 @@ projects[globalredirect][subdir] = contrib
 
 projects[imageapi][subdir] = contrib
 
-projects[imagecache][subdir] = contrib
 
 projects[jquery_ui][subdir] = contrib
 
@@ -60,7 +59,7 @@ projects[markdown][subdir] = contrib
 
 projects[pathauto][subdir] = contrib
 
-projects[path_redirect][subdir] = contrib
+projects[redirect][subdir] = contrib
 
 projects[skinr][subdir] = contrib
 
@@ -99,6 +98,7 @@ projects[fusion][download][revision] = "7.x-1.x"
 
 ; COD feature modules.
 projects[cod_support][subdir] = contrib 
+projects[cod_support][download][type] = "git"
 projects[cod_support][download][url] = "http://git.drupal.org/project/cod_support.git"
 projects[cod_support][download][revision] = "7.x-1.x"
 
