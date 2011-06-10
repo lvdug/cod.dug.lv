@@ -18,7 +18,11 @@ projects[context][subdir] = contrib
 projects[ctools][subdir] = contrib
 
 projects[strongarm][subdir] = contrib
-
+projects[strongarm][download][type] = "git"
+projects[strongarm][download][url] = "http://git.drupal.org/project/strongarm.git"
+projects[features][download][branch] = "7.x-2.x"
+ 
+ 
 projects[link][subdir] = contrib
 
 projects[date][subdir] = contrib
@@ -26,12 +30,13 @@ projects[date][subdir] = contrib
 projects[diff][subdir] = contrib
 
 projects[flag][subdir] = contrib
-; http://drupal.org/node/846826
-; projects[flag][patch][] = "http://drupal.org/files/issues/flag_features_export.patch"
-
+projects[flag][download][type] = "git"
+projects[flag][download][url] = "http://git.drupal.org/project/flag.git"
+projects[flag][download][branch] = "master"
 
 projects[features][subdir] = contrib
 projects[features][download][type] = "git"
+projects[features][download][url] = "http://git.drupal.org/project/features.git"
 projects[features][download][branch] = "7.x-1.x"
 
 ; These patches probably need to be re-rolled (and ideally, committed to both the D6 and D7 branches)
