@@ -3,7 +3,7 @@
 ; the dev version of COD and its dependencies, including patches, before
 ; a new full release of the distribution is rolled.  
 api = 2
-core = 6.x
+core = 7.x
 
 projects[drupal] = 7.2
 
