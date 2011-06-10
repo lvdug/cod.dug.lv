@@ -56,6 +56,9 @@ projects[imageapi][subdir] = contrib
 projects[jquery_ui][subdir] = contrib
 
 projects[markdown][subdir] = contrib
+projects[markdown][download][type] = "git"
+projects[markdown][download][url] = "http://git.drupal.org/project/markdown.git"
+projects[markdown][download][revision] = "6.x-1.x"
 
 projects[pathauto][subdir] = contrib
 
