@@ -10,7 +10,7 @@ projects[drupal][download][type] = "git"
 projects[drupal][download][url] = "http://git.drupal.org/project/drupal.git"
 projects[drupal][download][revision] = "7.x"
 
-;projects[cod][type] = profile
-;projects[cod][download][type] = "git"
-;projects[cod][download][url] = "http://git.drupal.org/project/cod.git"
-;projects[cod][download][revision] = "7.x-1.x"
+projects[cod][type] = profile
+projects[cod][download][type] = "git"
+projects[cod][download][url] = "http://git.drupal.org/project/cod.git"
+projects[cod][download][revision] = "7.x-1.x"
