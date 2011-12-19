@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the admin module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function admin_uninstall() {
+  variable_del('admin_toolbar');
+}
+
+/**
+ * Implements hook_enable().
+ */
+function admin_enable() {
+  // Weight admin to come after other modules -- in particular, admin_theme().
+  db_update('system')
+    ->fields(array('weight' => 1))
+    ->condition('name', 'admin')
+    ->condition('type', 'module')
+    ->execute();
+}
