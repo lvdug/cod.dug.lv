@@ -45,7 +45,8 @@ class FieldValidationException extends FieldException {
  * Each field defines which storage backend it uses. The Drupal system variable
  * 'field_storage_default' identifies the storage backend used by default.
  *
- * @see field
+ * See @link field Field API @endlink for information about the other parts of
+ * the Field API.
  */
 
 /**
@@ -120,7 +121,11 @@ define('FIELD_STORAGE_INSERT', 'insert');
  * Field Storage API is essentially the "fallback mechanism" for any fields
  * that aren't being intercepted explicitly by pre-operation hooks.
  *
- * @see field
+ * @link field_language Field Language API @endlink provides information about
+ * the structure of field objects.
+ *
+ * See @link field Field API @endlink for information about the other parts of
+ * the Field API.
  */
 
 /**
@@ -189,8 +194,10 @@ function _field_invoke($op, $entity_type, $entity, &$a = NULL, &$b = NULL, $opti
   // Iterate through the instances and collect results.
   $return = array();
   foreach ($instances as $instance) {
-    $field_name = $instance['field_name'];
-    $field = field_info_field($field_name);
+    // field_info_field() is not available for deleted fields, so use
+    // field_info_field_by_id().
+    $field = field_info_field_by_id($instance['field_id']);
+    $field_name = $field['field_name'];
     $function = $options['default'] ? 'field_default_' . $op : $field['module'] . '_field_' . $op;
     if (function_exists($function)) {
       // Determine the list of languages to iterate on.
@@ -698,7 +705,8 @@ function field_attach_load($entity_type, $entities, $age = FIELD_LOAD_CURRENT, $
     }
 
     // Invoke field-type module's hook_field_load().
-    _field_invoke_multiple('load', $entity_type, $queried_entities, $age, $options);
+    $null = NULL;
+    _field_invoke_multiple('load', $entity_type, $queried_entities, $age, $null, $options);
 
     // Invoke hook_field_attach_load(): let other modules act on loading the
     // entitiy.

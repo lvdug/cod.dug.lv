@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the COD Session feature.
- */
-
-include_once('cod_session.features.inc');

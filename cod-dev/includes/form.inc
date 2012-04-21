@@ -16,7 +16,7 @@
  * \@see user_pass_validate().
  * \@see user_pass_submit().
  *
- * @} End of "defgroup forms".
+ * @}
  */
 
 /**
@@ -3351,6 +3351,13 @@ function form_process_machine_name($element, &$form_state) {
     'replace' => '_',
   );
 
+  // By default, machine names are restricted to Latin alphanumeric characters.
+  // So, default to LTR directionality.
+  if (!isset($element['#attributes'])) {
+    $element['#attributes'] = array();
+  }
+  $element['#attributes'] += array('dir' => 'ltr');
+
   // The source element defaults to array('name'), but may have been overidden.
   if (empty($element['#machine_name']['source'])) {
     return $element;
@@ -3992,7 +3999,7 @@ function theme_form_element_label($variables) {
   $t = get_t();
 
   // If title and required marker are both empty, output no label.
-  if (empty($element['#title']) && empty($element['#required'])) {
+  if ((!isset($element['#title']) || $element['#title'] === '') && empty($element['#required'])) {
     return '';
   }
 

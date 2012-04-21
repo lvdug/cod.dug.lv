@@ -1,6 +1,0 @@
-name = jQuery UI
-description = Provides the jQuery UI plug-in to other Drupal modules.
-package = User interface
-core = 7.x
-files[] = jquery_ui.module
-files[] = jquery_ui.install

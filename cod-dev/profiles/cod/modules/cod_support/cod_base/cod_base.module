@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the COD Base feature.
- */
-
-include_once('cod_base.features.inc');
