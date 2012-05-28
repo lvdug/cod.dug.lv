@@ -11,7 +11,7 @@
  ******************************************************************************/
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function uc_cart_links_menu() {
   $items['admin/store/settings/cart_links'] = array(
@@ -53,14 +53,14 @@ function uc_cart_links_menu() {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implements hook_perm().
  */
 function uc_cart_links_perm() {
   return array('administer cart links', 'view cart links report');
 }
 
 /**
- * Implementation of hook_add_to_cart().
+ * Implements hook_add_to_cart().
  */
 function uc_cart_links_add_to_cart($nid, $qty, $data) {
   if (user_access('administer cart links') &&

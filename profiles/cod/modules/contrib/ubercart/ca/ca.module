@@ -17,7 +17,7 @@ require_once('ca.ca.inc');
  ******************************************************************************/
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function ca_menu() {
   $items = array();
@@ -138,7 +138,7 @@ function ca_convert_configurations_access() {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implements hook_perm().
  */
 function ca_perm() {
   return array('administer conditional actions');
@@ -438,7 +438,8 @@ function _ca_evaluate_condition($condition, $arguments, $condition_data) {
   $result = call_user_func_array($callback, $args);
 
   // If the negate operator is TRUE, then switch the result!
-  if ($condition['#settings']['negate']) {
+  if (isset($condition['#settings']['negate']) &&
+      $condition['#settings']['negate'])          {
     $result = !$result;
   }
 
@@ -641,7 +642,7 @@ function ca_load_trigger_conditions($trigger = '') {
         $entity = $argument['#entity'];
         // If the condition requires an entity the trigger doesn't provide,
         // then skip to the next condition.
-        if ($entity != 'arguments' && !$trigger_entities[$entity]) {
+        if ($entity != 'arguments' && !isset($trigger_entities[$entity])) {
           continue 2;
         }
       }
@@ -726,7 +727,7 @@ function ca_load_trigger_actions($trigger = '') {
         $entity = $argument['#entity'];
         // If the action requires an entity the trigger doesn't provide,
         // then skip to the next action.
-        if ($entity != 'arguments' && !$trigger_entities[$entity]) {
+        if ($entity != 'arguments' && !isset($trigger_entities[$entity])) {
           continue 2;
         }
       }

@@ -8,7 +8,7 @@
 // Ensure UbercartTestHelper is available.
 module_load_include('test', 'uc_store', 'uc_store');
 
-class UcOrderTestCase extends UbercartTestHelper {
+class UbercartOrderTestCase extends UbercartTestHelper {
 
   public static function getInfo() {
     return array(

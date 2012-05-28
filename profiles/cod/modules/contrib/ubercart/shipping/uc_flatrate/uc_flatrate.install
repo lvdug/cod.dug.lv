@@ -56,7 +56,7 @@ function uc_flatrate_schema() {
         'not null' => TRUE,
       ),
       'title' => array(
-        'description' => 'The method title, displayed on adminstration pages.',
+        'description' => 'The method title, displayed on administration pages.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -93,21 +93,21 @@ function uc_flatrate_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  */
 function uc_flatrate_install() {
   drupal_install_schema('uc_flatrate');
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function uc_flatrate_uninstall() {
   drupal_uninstall_schema('uc_flatrate');
 }
 
 /**
- * Implementation of hook_update_last_removed().
+ * Implements hook_update_last_removed().
  */
 function uc_flatrate_update_last_removed() {
   return 4;

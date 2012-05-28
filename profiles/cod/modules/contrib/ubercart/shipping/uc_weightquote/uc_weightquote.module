@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function uc_weightquote_menu() {
   $items = array();
@@ -43,7 +43,7 @@ function uc_weightquote_menu() {
 }
 
 /**
- * Implementation of hook_form_alter().
+ * Implements hook_form_alter().
  *
  * Add a form element for the shipping rate of a product.
  */
@@ -87,7 +87,7 @@ function uc_weightquote_form_alter(&$form, $form_state, $form_id) {
 }
 
 /**
- * Implementation of hook_nodeapi().
+ * Implements hook_nodeapi().
  */
 function uc_weightquote_nodeapi(&$node, $op) {
   if (uc_product_is_product($node->type)) {
@@ -129,7 +129,7 @@ function uc_weightquote_nodeapi(&$node, $op) {
  ******************************************************************************/
 
 /**
- * Implementation of hook_ca_predicate().
+ * Implements hook_ca_predicate().
  *
  * Connect the quote action with the quote event.
  */
@@ -161,7 +161,7 @@ function uc_weightquote_ca_predicate() {
 }
 
 /**
- * Implementation of hook_shipping_method().
+ * Implements hook_shipping_method().
  */
 function uc_weightquote_shipping_method() {
   $methods = array();

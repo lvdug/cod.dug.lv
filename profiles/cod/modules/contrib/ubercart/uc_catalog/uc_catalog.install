@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_schema().
+ * Implements hook_schema().
  */
 function uc_catalog_schema() {
   $schema = array();
@@ -64,18 +64,18 @@ function uc_catalog_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  *
  * Creates a Catalog vocabulary or uses one by that name that may already exist.
  */
 function uc_catalog_install() {
   $t = get_t();
-  //Find possible Product Catalog vocabulary.
+  // Find possible Product Catalog vocabulary.
   $result = db_query("SELECT vid FROM {vocabulary} WHERE name = 'Catalog'");
   if ($vocab = db_fetch_object($result)) {
     $vid = $vocab->vid;
   }
-  else { //If none, create one.
+  else { // If none, create one.
     db_query("INSERT INTO {vocabulary} (name, description, help, relations, hierarchy, multiple, required, tags, module, weight)
       VALUES ('%s', '', '%s', 0, 1, 1, 0, 0, 'uc_catalog', 0)", $t('Catalog'), $t('Hold Ctrl while clicking to select multiple categories.'));
     $vid = db_last_insert_id('vocabulary', 'vid');
@@ -87,7 +87,7 @@ function uc_catalog_install() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function uc_catalog_uninstall() {
   drupal_uninstall_schema('uc_catalog');
@@ -99,8 +99,8 @@ function uc_catalog_uninstall() {
 }
 
 /**
- * Implementation of hook_update_last_removed().
+ * Implements hook_update_last_removed().
  */
 function uc_catalog_update_last_removed() {
-  return 9;
+  return 8;
 }

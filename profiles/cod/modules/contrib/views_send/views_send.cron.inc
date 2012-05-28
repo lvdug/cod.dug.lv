@@ -31,6 +31,9 @@ function views_send_send_from_spool() {
     if ($status) {
       // Update the spool status.
       db_query("UPDATE {views_send_spool} SET status = %d WHERE eid = %d", 1, $message->eid);
+      if (variable_get('views_send_debug', FALSE)) {
+        watchdog('views_send', 'Message sent to %mail.', array('%mail' => $message->to_mail));
+      }
       $ok++;
     }
     else {
@@ -47,7 +50,7 @@ function views_send_send_from_spool() {
       $check = 0;
 
       // Break if exceded.
-      if (timer_read('views_send') > .8 * $max_execution_time) {
+      if (timer_read('views_send') / 1000 > .8 * $max_execution_time) {
         watchdog('views_send', 'PHP maximum execution time almost exceeded. Remaining E-mail messages will be sent during the next cron run. If this warning occurs regularly you should reduce the cron throttle setting.', NULL, WATCHDOG_WARNING);
         break;
       }
@@ -56,7 +59,9 @@ function views_send_send_from_spool() {
 
   if ($ok + $fail > 0) {
     // Log results and exit.
-    watchdog('views_send', '%ok messages sent in %sec seconds, %fail failed sending.', array('%ok' => $ok, '%sec' => timer_read('views_send'), '%fail' => $fail));
+    watchdog('views_send', '%ok messages sent in %sec seconds, %fail failed sending.', 
+      array('%ok' => $ok, '%sec' => timer_read('views_send') / 1000, '%fail' => $fail)
+    );
   }
 }
 

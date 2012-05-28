@@ -25,7 +25,7 @@ function nodeaccess_userreference_form_content_field_edit_form_alter(&$form, $fo
     $form['widget']['nodeaccess_userreference']['referenced'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Grants for referenced users'),
-      '#default_value' => isset($data['referenced']) ? $data['referenced'] : array('view'),
+      '#default_value' => isset($data['referenced']) ? $data['referenced'] : array(),
       '#options' => array(
         'view' => t('View'),
         'update' => t('Update'),
@@ -36,7 +36,7 @@ function nodeaccess_userreference_form_content_field_edit_form_alter(&$form, $fo
     $form['widget']['nodeaccess_userreference']['author'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Grants for author'),
-      '#default_value' => isset($data['author']) ? $data['author'] : array('view', 'update', 'delete'),
+      '#default_value' => isset($data['author']) ? $data['author'] : array(),
       '#options' => array(
         'view' => t('View'),
         'update' => t('Update'),
@@ -102,6 +102,9 @@ function nodeaccess_userreference_content_field_edit_form_submit($form, &$form_s
  *  and 'delete'.
  */
 function nodeaccess_userreference_add_grant(&$grants, $realm, $gid, $priority, $settings) {
+  if (empty($settings['view']) && empty($settings['update']) && empty($settings['delete'])) {
+    return;
+  }
   $key = $realm . $gid;
   if (!isset($grants[$key])) {
     // Setup the record.
@@ -141,40 +144,52 @@ function nodeaccess_userreference_node_access_records($node) {
     foreach ($info as $field) {
       if ($field['type'] == 'userreference') {
         $data = nodeaccess_userreference_field_settings($field['type_name'], $field['field_name']);
-        if (!empty($data) && !empty($node->$field['field_name'])) {
-          // Add referenced user grants.
-          foreach ((array)$node->$field['field_name'] as $userreference) {
-            if ($userreference['uid']) {
-              nodeaccess_userreference_add_grant(
-                $grants,
-                'nodeaccess_userreference',
-                $userreference['uid'],
-                $data['priority'],
-                $data['referenced']
-              );
+        if (!empty($data)) {
+          if (!empty($node->$field['field_name'])) {
+            // Add referenced user grants.
+            foreach ((array)$node->$field['field_name'] as $userreference) {
+              if ($userreference['uid']) {
+                nodeaccess_userreference_add_grant(
+                  $grants,
+                  'nodeaccess_userreference',
+                  $userreference['uid'],
+                  $data['priority'],
+                  $data['referenced']
+                );
+              }
             }
+          }
+          if ($data['unused']) {
+            // Add a dummy grant for user 1 to block other users' access.
+            nodeaccess_userreference_add_grant(
+              $grants,
+              'nodeaccess_userreference',
+              1,
+              $data['priority'],
+              $data['referenced']
+            );
           }
           // If there are grants set, also add the author and view-all grants.
           // These will fire for each non-empty nodeaccess_userreference field,
           // but redundant calls will be correctly handled by the helper function:
           // nodeaccess_userreference_add_grant().
-          if ($data['unused'] || !empty($grants)) {
-             // Add author grants.
-             nodeaccess_userreference_add_grant(
-               $grants,
-               'nodeaccess_userreference_author',
-               $node->uid,
-               $data['priority'],
-               $data['author']
-             );
-             // Add all grants.
-             nodeaccess_userreference_add_grant(
-               $grants,
-               'nodeaccess_userreference_all',
-               1,
-               $data['priority'],
-               $data['all']
-             );
+          if (!empty($grants)) {
+            // Add author grants.
+            nodeaccess_userreference_add_grant(
+              $grants,
+              'nodeaccess_userreference_author',
+              $node->uid,
+              $data['priority'],
+              $data['author']
+            );
+            // Add all grants.
+            nodeaccess_userreference_add_grant(
+              $grants,
+              'nodeaccess_userreference_all',
+              1,
+              $data['priority'],
+              $data['all']
+            );
           }
         }
       }

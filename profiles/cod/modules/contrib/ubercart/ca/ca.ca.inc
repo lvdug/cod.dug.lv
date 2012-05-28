@@ -10,7 +10,7 @@
  ******************************************************************************/
 
 /**
- * Implementation of hook_ca_entity().
+ * Implements hook_ca_entity().
  *
  * Demonstrates defining a data object that may be passed in to ca_pull_trigger
  * and mapped to a predicate's arguments.
@@ -39,7 +39,7 @@ function ca_ca_entity() {
 }
 
 /**
- * Implementation of hook_ca_condition().
+ * Implements hook_ca_condition().
  */
 function ca_ca_condition() {
   $conditions = array();
@@ -86,7 +86,7 @@ function ca_ca_condition() {
 }
 
 /**
- * Implementation of hook_ca_action().
+ * Implements hook_ca_action().
  *
  * Demonstrates defining an action for predicates to use; primarily specifies a
  * callback function to perform the action and an array that specifies arguments
@@ -390,6 +390,7 @@ function ca_condition_custom_php_form($form_state, $settings = array(), $argumen
     '#title' => t('Custom PHP'),
     '#description' => t('Enter the custom PHP to be evaluated when this condition is executed. Should not include &lt;?php ?> delimiters.'),
     '#default_value' => isset($settings['php']) ? $settings['php'] : '',
+    '#wysiwyg' => FALSE,
   );
 
   return $form;
@@ -465,6 +466,7 @@ function ca_action_custom_php_form($form_state, $settings = array(), $arguments 
     '#title' => t('Custom PHP'),
     '#description' => t('Enter the custom PHP to be evaluated when this action is executed.  Should not include &lt;?php ?> delimiters.'),
     '#default_value' => isset($settings['php']) ? $settings['php'] : '',
+    '#wysiwyg' => FALSE,
   );
 
   return $form;
@@ -534,6 +536,7 @@ function ca_build_email_form($form_state, $settings, $token_filters) {
     '#default_value' => $settings['addresses'],
     '#description' => t('Enter the email addresses to receive the notifications, one on each line. You may use order tokens for dynamic email addresses.'),
     '#required' => TRUE,
+    '#wysiwyg' => FALSE,
   );
   $form['subject'] = array(
     '#type' => 'textfield',
@@ -545,6 +548,7 @@ function ca_build_email_form($form_state, $settings, $token_filters) {
     '#type' => 'textarea',
     '#title' => t('Message'),
     '#default_value' => $settings['message'],
+    '#wysiwyg' => FALSE,
   );
 
   // We add the #is_format element to allow us to locate and configure the filters.

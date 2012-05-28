@@ -240,7 +240,7 @@ function _uc_price_get_handlers($options = array()) {
 }
 
 /**
- * Implementation of hook_uc_price_handler().
+ * Implements hook_uc_price_handler().
  */
 function uc_store_uc_price_handler() {
   return array(

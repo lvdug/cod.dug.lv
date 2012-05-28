@@ -85,8 +85,7 @@ function views_send_schema() {
         'description' => 'The E-mail additional headers.',
         'type' => 'text',
         'not null' => TRUE,
-        'size' => 'big',
-        'default' => ''),
+        'size' => 'big'),
     ),
     'indexes' => array(
       'uid' => array('uid'),

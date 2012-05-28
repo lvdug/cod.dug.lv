@@ -6,26 +6,26 @@
  */
 
 /**
- * Implementation of hook_requirements().
+ * Implements hook_requirements().
  */
 function uc_ups_requirements($phase) {
   $t = get_t();
 
-  $has_simplexml = class_exists('SimpleXMLElement');
+  $has_simplexml = extension_loaded('SimpleXML');
   $requirements['uc_ups_simplexml'] = array(
     'title' => $t('SimpleXML'),
     'value' => $has_simplexml ? $t('Enabled') : $t('Not found'),
   );
   if (!$has_simplexml) {
     $requirements['uc_ups_simplexml']['severity'] = REQUIREMENT_ERROR;
-    $requirements['uc_ups_simplexml']['description'] = $t('UPS requires the PHP <a href="!simplexml_url">SimpleXML</a> library.', array('!simplexml_url' => 'http://php.net/manual/en/simplexml.setup.php'));
+    $requirements['uc_ups_simplexml']['description'] = $t('UPS requires the PHP <a href="!simplexml_url">SimpleXML</a> library.', array('!simplexml_url' => 'http://www.php.net/simplexml'));
   }
 
   return $requirements;
 }
 
 /**
- * Implementation of hook_schema().
+ * Implements hook_schema().
  */
 function uc_ups_schema() {
   $schema = array();
@@ -62,14 +62,14 @@ function uc_ups_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  */
 function uc_ups_install() {
   drupal_install_schema('uc_ups');
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function uc_ups_uninstall() {
   drupal_uninstall_schema('uc_ups');
@@ -198,4 +198,17 @@ function uc_ups_update_6000() {
   db_change_field($ret, 'uc_ups_products', 'nid', 'nid', array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0));
 
   return $ret;
+}
+
+/**
+ * Updates UPS Production URL.
+ */
+function uc_ups_update_6201() {
+  $current = variable_get('uc_ups_connection_address', '');
+
+  // If currently using production URL, update variable to new value.
+  if ($current == 'https://www.ups.com/ups.app/xml/') {
+    variable_set('uc_ups_connection_address',
+                 'https://onlinetools.ups.com/ups.app/xml/');
+  }
 }

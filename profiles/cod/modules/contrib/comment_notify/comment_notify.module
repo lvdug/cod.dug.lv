@@ -1,5 +1,4 @@
 <?php
-// $Id: comment_notify.module,v 1.73.2.7 2010/10/11 01:37:58 greggles Exp $
 
 /**
  * @file
@@ -287,7 +286,7 @@ function comment_notify_user($type, &$edit, &$user, $category = NULL) {
         // Only show the node followup UI if the user has permission to create nodes.
         $nodes = FALSE;
         foreach (node_get_types() as $type) {
-          if (user_access('create '. $type->type .' content')) {
+          if (node_access('create', $type->type)) {
             $nodes = TRUE;
             break;
           }
@@ -295,9 +294,9 @@ function comment_notify_user($type, &$edit, &$user, $category = NULL) {
         if (user_access('administer nodes') || $nodes) {
           $form['comment_notify_settings']['node_notify_mailalert'] = array(
             '#type' => 'checkbox',
-            '#title' => t('Receive node follow-up notification e-mails'),
+            '#title' => t('Receive content follow-up notification e-mails'),
             '#default_value' => isset($edit['node_notify_mailalert']) ? $edit['node_notify_mailalert'] : variable_get('node_notify_default_mailalert', FALSE),
-            '#description' => t('Check this box to receive an e-mail notification for follow-ups on your nodes (pages, forum topics, etc). You can not disable notifications for individual threads.')
+            '#description' => t('Check this box to receive an e-mail notification for follow-ups on your content. You can not disable notifications for individual threads.')
           );
         }
         else {
@@ -341,6 +340,11 @@ function comment_notify_user($type, &$edit, &$user, $category = NULL) {
         foreach ($user_settings as $property => $value) {
           $user->$property = $value;
         }
+      }
+      else {
+        // If they have no preference, use the defaults.
+        $user->node_notify_mailalert = variable_get('node_notify_default_mailalert', FALSE);
+        $user->comment_notify_mailalert = variable_get('comment_notify_default_registered_mailalert', COMMENT_NOTIFY_NODE);
       }
       break;
 

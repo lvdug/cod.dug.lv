@@ -68,7 +68,7 @@ class UcOrder {
  ******************************************************************************/
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function uc_order_menu() {
   global $user;
@@ -166,6 +166,16 @@ function uc_order_menu() {
     'title' => 'Create order',
     'description' => 'Create an empty new order.',
     'page callback' => 'uc_order_create',
+    'access arguments' => array('create orders'),
+    'type' => MENU_NORMAL_ITEM,
+    'weight' => -5,
+    'file' => 'uc_order.admin.inc',
+  );
+  $items['admin/store/orders/create/%user'] = array(
+    'title' => 'Create order',
+    'description' => 'Create an empty new order.',
+    'page callback' => 'uc_order_create',
+    'page arguments' => array(4),
     'access arguments' => array('create orders'),
     'type' => MENU_NORMAL_ITEM,
     'weight' => -5,
@@ -345,7 +355,7 @@ function uc_order_page_title($order) {
 }
 
 /**
- * Implementation of hook_init().
+ * Implements hook_init().
  */
 function uc_order_init() {
   drupal_add_css(drupal_get_path('module', 'uc_order') .'/uc_order.css');
@@ -361,7 +371,7 @@ function uc_order_init() {
 }
 
 /**
- * Implementation of hook_theme().
+ * Implements hook_theme().
  */
 function uc_order_theme() {
   return array(
@@ -405,7 +415,7 @@ function uc_order_theme() {
 }
 
 /**
- * Implementation of hook_token_values(). (token.module)
+ * Implements hook_token_values(). (token.module)
  */
 function uc_order_token_values($type, $object = NULL) {
   $values = array();
@@ -414,14 +424,8 @@ function uc_order_token_values($type, $object = NULL) {
     case 'order':
       $order = $object;
 
-      if (isset($_SESSION['new_user']) && is_array($_SESSION['new_user'])) {
-        $values['new-username'] = check_plain($_SESSION['new_user']['name']);
-        $values['new-password'] = check_plain($_SESSION['new_user']['pass']);
-      }
-      else {
-        $values['new-username'] = '';
-        $values['new-password'] = '';
-      }
+      $values['new-username'] = isset($order->data['new_user']['name']) ? check_plain($order->data['new_user']['name']) : '';
+      $values['new-password'] = isset($order->password) ? $order->password : t('Your password');
       $values['order-id'] = $order->order_id;
       $values['order-uid'] = $order->uid;
       $values['order-url'] = url('user/'. $order->uid .'/order/'. $order->order_id, array('absolute' => TRUE));
@@ -429,6 +433,8 @@ function uc_order_token_values($type, $object = NULL) {
       $values['order-admin-url'] = url('admin/store/orders/'. $order->order_id, array('absolute' => TRUE));
       $admin_url = url('admin/store/orders/'. $order->order_id, array('absolute' => TRUE));
       $values['order-admin-link'] = l($order->order_id, $admin_url);
+      $subtotal = '';
+      $subtotal_raw = 0;
       if (is_array($order->line_items)) {
         foreach ($order->line_items as $key => $value) {
           if ($value['type'] == 'subtotal') {
@@ -441,6 +447,9 @@ function uc_order_token_values($type, $object = NULL) {
               ),
             );
             $subtotal = uc_price($order->line_items[$key]['amount'], $context);
+
+            $context['revision'] = 'original';
+            $subtotal_raw = uc_price($order->line_items[$key]['amount'], $context);
           }
           if ($value['type'] == 'shipping' && !isset($ship_method)) {
             $ship_method = $value['title'];
@@ -448,6 +457,7 @@ function uc_order_token_values($type, $object = NULL) {
         }
       }
       $values['order-subtotal'] = $subtotal;
+      $values['order-subtotal-raw'] = $subtotal_raw;
       $context = array(
         'revision' => 'formatted-original',
         'type' => 'order_total',
@@ -456,6 +466,10 @@ function uc_order_token_values($type, $object = NULL) {
         ),
       );
       $values['order-total'] = uc_price($order->order_total, $context);
+
+      $context['revision'] = 'original';
+      $values['order-total-raw'] = uc_price($order->order_total, $context);
+
       $values['order-email'] = check_plain($order->primary_email);
       $values['order-shipping-address'] = uc_order_address($order, 'delivery');
       $values['order-shipping-phone'] = check_plain($order->delivery_phone);
@@ -485,7 +499,7 @@ function uc_order_token_values($type, $object = NULL) {
 }
 
 /**
- * Implementation of hook_token_list(). (token.module)
+ * Implements hook_token_list(). (token.module)
  */
 function uc_order_token_list($type = 'all') {
   $tokens = array();
@@ -499,8 +513,10 @@ function uc_order_token_list($type = 'all') {
     $tokens['order']['order-link'] = t('A link to the order using the order ID.');
     $tokens['order']['order-admin-url'] = t('The URL to the admin view page using the order ID.');
     $tokens['order']['order-admin-link'] = t('A link to the order admin view page using the order ID.');
-    $tokens['order']['order-subtotal'] = t('The subtotal of products on an order.');
-    $tokens['order']['order-total'] = t('The order total.');
+    $tokens['order']['order-subtotal'] = t('The formatted subtotal of products on an order.');
+    $tokens['order']['order-subtotal-raw'] = t('The numerical subtotal of products on an order.');
+    $tokens['order']['order-total'] = t('The formatted order total.');
+    $tokens['order']['order-total-raw'] = t('The numerical order total.');
     $tokens['order']['order-email'] = t('The primary e-mail address of the order.');
     $tokens['order']['order-shipping-address'] = t('The order shipping address.');
     $tokens['order']['order-shipping-phone'] = t('The phone number for the shipping address.');
@@ -521,7 +537,7 @@ function uc_order_token_list($type = 'all') {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implements hook_perm().
  */
 function uc_order_perm() {
   return array('view own orders', 'view all orders', 'create orders', 'edit orders', 'delete orders', 'unconditionally delete orders', 'administer order workflow');
@@ -550,7 +566,7 @@ function uc_order_access_order_log() {
 }
 
 /**
- * Implementation of hook_user().
+ * Implements hook_user().
  */
 function uc_order_user($op, &$edit, &$account, $category = NULL) {
   global $user;
@@ -573,7 +589,7 @@ function uc_order_user($op, &$edit, &$account, $category = NULL) {
 }
 
 /**
- * Implementation of hook_mail().
+ * Implements hook_mail().
  */
 function uc_order_mail($key, &$message, $params) {
   $langcode = isset($message['language']) ? $message['language']->language : NULL;
@@ -620,7 +636,7 @@ function uc_order_mail($key, &$message, $params) {
  ******************************************************************************/
 
 /**
- * Implementation of hook_order_pane().
+ * Implements hook_order_pane().
  */
 function uc_order_order_pane() {
   $panes[] = array(
@@ -700,7 +716,7 @@ function uc_order_order_pane() {
 }
 
 /**
- * Implementation of hook_order_state().
+ * Implements hook_order_state().
  */
 function uc_order_order_state() {
   $states[] = array(
@@ -732,7 +748,7 @@ function uc_order_order_state() {
 }
 
 /**
- * Implementation of hook_line_item().
+ * Implements hook_line_item().
  */
 function uc_order_line_item() {
   $items[] = array(
@@ -766,7 +782,7 @@ function uc_order_line_item() {
 }
 
 /**
- * Implementation of hook_uc_message().
+ * Implements hook_uc_message().
  */
 function uc_order_uc_message() {
   $messages['order_update_email'] = t("[order-first-name] [order-last-name],\n\nYour order number [order-link] at [store-name] has been updated.\n\nOrder status: [order-status]\n\nOrder comment:\n[order-last-comment]\n\nBrowse to the following page to login to your account and view your order details:\n[site-login]\n\n\nThanks again,\n\n[store-name]\n[site-slogan]");
@@ -775,7 +791,7 @@ function uc_order_uc_message() {
 }
 
 /**
- * Implementation of hook_uc_invoice_templates().
+ * Implements hook_uc_invoice_templates().
  */
 function uc_order_uc_invoice_templates() {
   return array('admin', 'customer');
@@ -1216,6 +1232,7 @@ function uc_order_delete($order_id) {
 
   // Perform the operations if we're deleting a valid order.
   if ($order !== FALSE) {
+    ca_pull_trigger('uc_order_delete', $order);
     uc_order_module_invoke('delete', $order, NULL);
 
     // Delete data from the appropriate Ubercart order tables.
@@ -1347,7 +1364,12 @@ function uc_order_update_status($order_id, $status) {
 
   // Attempt the update if the order exists.
   if ($order !== FALSE) {
-    // Return false if any module says the update is not good to go.
+    // Return TRUE if the order status is already set.
+    if ($order->order_status == $status) {
+      return TRUE;
+    }
+
+    // Return FALSE if any module says the update is not good to go.
     foreach (module_list() as $module) {
       $function = $module .'_order';
       // $order must be passed by reference.
@@ -1545,7 +1567,7 @@ function uc_order_is_shippable($order) {
 
   foreach ($order->products as $product) {
     // Return FALSE if the product form specifies this as not shippable.
-    if ($product->data['shippable'] == FALSE) {
+    if (empty($product->data['shippable'])) {
       $results[] = FALSE;
       continue;
     }
@@ -1852,6 +1874,8 @@ function uc_order_status_data($status_id, $key) {
  *   Valid actions for an order; returned according to the $icon_html parameter.
  */
 function uc_order_actions($order, $icon_html = FALSE) {
+  global $user;
+
   $state = uc_order_status_data($order->order_status, 'state');
   $order_id = array('@order_id' => $order->order_id);
   $actions = array();
@@ -1864,6 +1888,33 @@ function uc_order_actions($order, $icon_html = FALSE) {
       'icon' => '<img src="'. base_path() . drupal_get_path('module', 'uc_store') .'/images/order_view.gif" alt="'. $alt .'" />',
       'title' => $alt,
     );
+
+    $alt = t('Print order @order_id.', $order_id);
+    $actions[] = array(
+      'name' => t('Print'),
+      'url' => 'admin/store/orders/'. $order->order_id .'/invoice/print',
+      'icon' => '<img src="'. base_path() . drupal_get_path('module', 'uc_store') .'/images/print.gif" alt="'. $alt .'" />',
+      'title' => $alt,
+    );
+  }
+  elseif (user_access('view own orders') && $order->uid == $user->uid) {
+    $alt = t('View order @order_id.', $order_id);
+    $actions[] = array(
+      'name' => t('View'),
+      'url' => 'user/'. $user->uid .'/orders/'. $order->order_id,
+      'icon' => '<img src="'. base_path() . drupal_get_path('module', 'uc_store') .'/images/order_view.gif" alt="'. $alt .'" />',
+      'title' => $alt,
+    );
+
+    if (variable_get('uc_cust_view_order_invoices', TRUE)) {
+      $alt = t('Print order @order_id.', $order_id);
+      $actions[] = array(
+        'name' => t('Print'),
+        'url' => 'user/'. $user->uid .'/orders/'. $order->order_id .'/print',
+        'icon' => '<img src="'. base_path() . drupal_get_path('module', 'uc_store') .'/images/print.gif" alt="'. $alt .'" />',
+        'title' => $alt,
+      );
+    }
   }
 
   if (user_access('edit orders')) {
@@ -1918,7 +1969,13 @@ function uc_order_actions($order, $icon_html = FALSE) {
   if ($icon_html) {
     $output = '';
     foreach ($actions as $action) {
-      $output .= l($action['icon'], $action['url'], array('attributes' => array('title' => $action['title']), 'html' => TRUE));
+      $output .= l($action['icon'], $action['url'], array(
+        'attributes' => array(
+          'class' => 'uc-order-action',
+          'title' => $action['title'],
+        ),
+        'html' => TRUE,
+      ));
     }
     return $output;
   }

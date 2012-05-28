@@ -39,7 +39,7 @@
             <?php if ($thank_you_message) { ?>
             <p><b><?php echo t('Thanks for your order, !order_first_name!', array('!order_first_name' => $order_first_name)); ?></b></p>
 
-            <?php if (isset($_SESSION['new_user'])) { ?>
+            <?php if (isset($order->data['new_user'])) { ?>
             <p><b><?php echo t('An account has been created for you with the following details:'); ?></b></p>
             <p><b><?php echo t('Username:'); ?></b> <?php echo $new_username; ?><br />
             <b><?php echo t('Password:'); ?></b> <?php echo $new_password; ?></p>

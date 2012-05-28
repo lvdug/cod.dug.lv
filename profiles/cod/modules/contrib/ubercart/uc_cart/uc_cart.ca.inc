@@ -11,7 +11,7 @@
  ******************************************************************************/
 
 /**
- * Implementation of hook_ca_condition().
+ * Implements hook_ca_condition().
  */
 function uc_cart_ca_condition() {
   $conditions['uc_cart_condition_product_class'] = array(
@@ -30,7 +30,7 @@ function uc_cart_ca_condition() {
 }
 
 /**
- * Implementation of hook_ca_trigger().
+ * Implements hook_ca_trigger().
  */
 function uc_cart_ca_trigger() {
   $triggers['uc_checkout_complete'] = array(
@@ -52,7 +52,7 @@ function uc_cart_ca_trigger() {
 }
 
 /**
- * Implementation of hook_ca_predicate().
+ * Implements hook_ca_predicate().
  */
 function uc_cart_ca_predicate() {
   $predicates = array();
@@ -98,7 +98,7 @@ function uc_cart_ca_predicate() {
         ),
         '#settings' => array(
           'from' => uc_store_email_from(),
-          'addresses' => variable_get('uc_store_email', ini_get('sendmail_from')),
+          'addresses' => uc_store_email(),
           'subject' => t('New Order at [store-name]'),
           'template' => 'admin',
           'view' => 'admin-mail',

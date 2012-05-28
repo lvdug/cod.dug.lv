@@ -381,7 +381,7 @@ function uc_attribute_install() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function uc_attribute_uninstall() {
   drupal_uninstall_schema('uc_attribute');
@@ -390,7 +390,7 @@ function uc_attribute_uninstall() {
 }
 
 /**
- * Implementation of hook_update_last_removed().
+ * Implements hook_update_last_removed().
  */
 function uc_attribute_update_last_removed() {
   return 10;

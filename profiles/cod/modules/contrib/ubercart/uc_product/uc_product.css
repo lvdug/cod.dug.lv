@@ -83,10 +83,15 @@ table.product-list {
   clear: both;
 }
 
+.uc-product-features td {
+  vertical-align: top;
+}
+
 .add-feature div {
   padding-right: 1em;
 }
 
-.add-feature div, .add-feature label {
+.add-feature div,
+.add-feature label {
   display: inline;
 }

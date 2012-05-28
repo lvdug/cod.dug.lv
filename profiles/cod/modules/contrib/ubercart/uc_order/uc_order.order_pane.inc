@@ -11,7 +11,7 @@
  */
 
 /**
- * Handle the "Ship to" order pane.
+ * Handles the "Ship to" order pane.
  */
 function uc_order_pane_ship_to($op, $arg1) {
   switch ($op) {
@@ -106,7 +106,7 @@ function uc_order_pane_ship_to($op, $arg1) {
 }
 
 /**
- * Handle the "Bill to" order pane.
+ * Handles the "Bill to" order pane.
  */
 function uc_order_pane_bill_to($op, $arg1) {
   switch ($op) {
@@ -196,7 +196,7 @@ function uc_order_pane_bill_to($op, $arg1) {
 }
 
 /**
- * Handle the "Customer Info" order pane.
+ * Handles the "Customer Info" order pane.
  */
 function uc_order_pane_customer($op, $arg1) {
   switch ($op) {
@@ -271,15 +271,15 @@ function uc_order_pane_customer($op, $arg1) {
 }
 
 /**
- * Handle the "Products" order pane.
+ * Handles the "Products" order pane.
  */
 function uc_order_pane_products($op, $arg1) {
   switch ($op) {
     case 'view':
-      return drupal_render(tapir_get_table('op_products_view_table', $arg1));
+      return tapir_get_table('op_products_view_table', $arg1);
 
     case 'customer':
-      return drupal_render(tapir_get_table('op_products_customer_table', $arg1));
+      return tapir_get_table('op_products_customer_table', $arg1);
 
     case 'edit-theme':
       drupal_add_js('uc_order_load_product_edit_div('. $arg1['order_id']['#value'] .');', 'inline');
@@ -315,17 +315,17 @@ function uc_order_pane_products($op, $arg1) {
 }
 
 /**
- * Handle the "Line Items" order pane.
+ * Handles the "Line Items" order pane.
  */
-function uc_order_pane_line_items($op, $arg1) {
+function uc_order_pane_line_items($op, $order) {
   switch ($op) {
     case 'view':
     case 'customer':
-      $line_items = $arg1->line_items;
+      $line_items = $order->line_items;
       $items = _line_item_list();
       foreach ($items as $item) {
         if (isset($item['display_only']) && $item['display_only'] == TRUE) {
-          $result = $item['callback']('display', $arg1);
+          $result = $item['callback']('display', $order);
           if (is_array($result)) {
             foreach ($result as $line) {
               $line_items[] = array(
@@ -343,15 +343,17 @@ function uc_order_pane_line_items($op, $arg1) {
         'revision' => 'themed',
         'type' => 'line_item',
         'subject' => array(
-          'order' => $arg1,
+          'order' => $order,
         ),
       );
       $output = '<table class="line-item-table">';
       foreach ($line_items as $item) {
         $context['subject']['line_item'] = $item;
-        $output .= '<tr><td class="li-title">'. check_plain($item['title']) .':</td>'
-                  .'<td class="li-amount" nowrap="nowrap">'
-                 . uc_price($item['amount'], $context) .'</td></tr>';
+        $output .= '<tr><td class="li-title">' .
+                   check_plain($item['title']) .
+                   ':</td><td class="li-amount">' .
+                   uc_price($item['amount'], $context) .
+                   '</td></tr>';
       }
       $output .= '</table>';
       return $output;
@@ -362,13 +364,13 @@ function uc_order_pane_line_items($op, $arg1) {
     case 'edit-form':
       $options = array();
       $items = _line_item_list();
-      $line_items = $arg1->line_items;
+      $line_items = $order->line_items;
       foreach ($items as $item) {
         if (isset($item['add_list']) && $item['add_list'] === TRUE) {
           $options[$item['id']] = check_plain($item['title']);
         }
         if (isset($item['display_only']) && $item['display_only'] == TRUE) {
-          $result = $item['callback']('display', $arg1);
+          $result = $item['callback']('display', $order);
           if (is_array($result)) {
             foreach ($result as $line) {
               $line_items[] = array(
@@ -415,7 +417,7 @@ function uc_order_pane_line_items($op, $arg1) {
         'revision' => 'themed',
         'type' => 'line_item',
         'subject' => array(
-          'order' => $arg1,
+          'order' => $order,
         ),
       );
       foreach ($line_items as $item) {
@@ -430,13 +432,13 @@ function uc_order_pane_line_items($op, $arg1) {
             '#default_value' => $item['title'],
             '#size' => 40,
             '#maxlength' => 128,
-            '#prefix' => '<img id="li-'. $item['line_item_id'] .'" src="'
+            '#prefix' => '<img id="li-' . $item['line_item_id'] . '" src="'
                        . base_path() . drupal_get_path('module', 'uc_store')
-                        .'/images/error.gif" alt="'. t('Remove line item.')
-                        .'" title="'. t('Remove line item.') .'" style="'
-                        .'cursor: pointer; position: relative; top: 3px;" '
-                        .'onclick="confirm_line_item_delete(\''
-                       . addslashes(t('Remove this line item?')) .'\', this.id);" />',
+                       . '/images/error.gif" alt="' . t('Remove line item.')
+                       . '" title="' . t('Remove line item.') . '" style="'
+                       . 'cursor: pointer; position: relative; top: 3px;" '
+                       . 'onclick="confirm_line_item_delete(\''
+                       . addslashes(t('Remove this line item?')) . '\', this.id);" />',
           );
           $form['line_items'][$item['line_item_id']]['amount'] = array(
             '#type' => 'textfield',
@@ -461,37 +463,37 @@ function uc_order_pane_line_items($op, $arg1) {
       return $form;
 
     case 'edit-theme':
-      $arg1['add_line_item']['li_type_select']['#title'] = '';
+      $order['add_line_item']['li_type_select']['#title'] = '';
       $output = '<table class="full-width"><tr><td>';
-      $output .= '<table><tr><td colspan="2"><b>'. t('Add a line item')
-                .': </b></td></tr><tr><td>'. drupal_render($arg1['add_line_item']['li_type_select'])
-                .' </td><td>'. drupal_render($arg1['add_line_item']['submit'])
-                .'</td></tr></table>';
-      $output .= '</td><td>'. drupal_render($arg1['li_delete_id'])
-                .'<table class="line-item-table">';
-      foreach (element_children($arg1['line_items']) as $field) {
-        $arg1['line_items'][$field]['title']['#title'] = '';
-        $arg1['line_items'][$field]['amount']['#title'] = '';
+      $output .= '<table><tr><td colspan="2"><b>' . t('Add a line item')
+                . ': </b></td></tr><tr><td>' . drupal_render($order['add_line_item']['li_type_select'])
+                . ' </td><td>' . drupal_render($order['add_line_item']['submit'])
+                . '</td></tr></table>';
+      $output .= '</td><td>' . drupal_render($order['li_delete_id'])
+                . '<table class="line-item-table">';
+      foreach (element_children($order['line_items']) as $field) {
+        $order['line_items'][$field]['title']['#title'] = '';
+        $order['line_items'][$field]['amount']['#title'] = '';
         $output .= '<tr><td class="li-title">'
-                 . drupal_render($arg1['line_items'][$field]['li_id'])
-                 . drupal_render($arg1['line_items'][$field]['title'])
-                  .':</td><td class="li-amount" nowrap>'
-                 . drupal_render($arg1['line_items'][$field]['amount'])
-                  .'</td></tr>';
+                 . drupal_render($order['line_items'][$field]['li_id'])
+                 . drupal_render($order['line_items'][$field]['title'])
+                 . ':</td><td class="li-amount">'
+                 . drupal_render($order['line_items'][$field]['amount'])
+                 . '</td></tr>';
       }
       $output .= '</table></td></tr></table>';
       return $output;
 
     case 'edit-process':
-      if (is_array($arg1['line_items'])) {
-        foreach ($arg1['line_items'] as $line) {
+      if (is_array($order['line_items'])) {
+        foreach ($order['line_items'] as $line) {
           if (is_numeric($line['li_id']) && intval($line['li_id']) > 0) {
             uc_order_update_line_item($line['li_id'], $line['title'], $line['amount']);
           }
         }
       }
-      if (intval($arg1['li_delete_id']) > 0) {
-        uc_order_delete_line_item($arg1['li_delete_id']);
+      if (intval($order['li_delete_id']) > 0) {
+        uc_order_delete_line_item($order['li_delete_id']);
         drupal_set_message(t('Line item removed.'));
       }
       return;
@@ -500,54 +502,51 @@ function uc_order_pane_line_items($op, $arg1) {
       return array(t('Add line'));
 
     case t('Add line'):
-      drupal_goto('admin/store/orders/'. $arg1['order_id']
-                 .'/add_line_item/'. $arg1['li_type_select']);
+      drupal_goto('admin/store/orders/' . $order['order_id']
+                 . '/add_line_item/' . $order['li_type_select']);
   }
 }
 
 /**
- * Handle the "Order Comments" order pane.
+ * Handles the "Order Comments" order pane.
  */
-function uc_order_pane_order_comments($op, $arg1) {
+function uc_order_pane_order_comments($op, $order) {
   switch ($op) {
     case 'view':
-      $comments = uc_order_comments_load($arg1->order_id);
-      return drupal_render(tapir_get_table('op_order_comments_view_table', $comments));
+      $comments = uc_order_comments_load($order->order_id);
+      return tapir_get_table('op_order_comments_view_table', $comments);
 
     case 'customer':
-      $comments = uc_order_comments_load($arg1->order_id);
-      $header = array(t('Date'), t('Status'), array('data' => t('Message'), 'width' => '100%'));
+      $comments = uc_order_comments_load($order->order_id);
+      $header = array(t('Date'), t('Status'), t('Message'));
       $rows[] = array(
-        format_date($arg1->created, 'custom', variable_get('uc_date_format_default', 'm/d/Y')),
-        array('data' => '-', 'align' => 'center'),
-        t('Order created.')
+        array('data' => format_date($order->created, 'custom', variable_get('uc_date_format_default', 'm/d/Y')), 'class' => 'date'),
+        array('data' => '-', 'class' => 'status'),
+        array('data' => t('Order created.'), 'class' => 'message'),
       );
       if (count($comments) > 0) {
         foreach ($comments as $comment) {
           $rows[] = array(
-            'data' => array(
-              array('data' => format_date($comment->created, 'custom', variable_get('uc_date_format_default', 'm/d/Y')), 'align' => 'center'),
-              array('data' => $comment->title, 'align' => 'center', 'nowrap' => 'nowrap'),
-              check_plain($comment->message),
-            ),
-            'valign' => 'top'
+            array('data' => format_date($comment->created, 'custom', variable_get('uc_date_format_default', 'm/d/Y')), 'class' => 'date'),
+            array('data' => $comment->title, 'class' => 'status'),
+            array('data' => check_plain($comment->message), 'class' => 'message'),
           );
         }
       }
-      $output = theme('table', $header, $rows);
+      $output = theme('table', $header, $rows, array('class' => 'uc-order-comments'));
 
       return $output;
   }
 }
 
 /**
- * Handle the "Admin Comments" order pane.
+ * Handles the "Admin Comments" order pane.
  */
 function uc_order_pane_admin_comments($op, $arg1) {
   switch ($op) {
     case 'view':
       $comments = uc_order_comments_load($arg1->order_id, TRUE);
-      return drupal_render(tapir_get_table('op_admin_comments_view_table', $comments));
+      return tapir_get_table('op_admin_comments_view_table', $comments);
 
     case 'edit-form':
       $form['admin_comment_field'] = array(
@@ -559,6 +558,7 @@ function uc_order_pane_admin_comments($op, $arg1) {
       $form['admin_comment_field']['admin_comment'] = array(
         '#type' => 'textarea',
         '#description' => t('Admin comments are only seen by store administrators.'),
+        '#wysiwyg' => FALSE,
       );
       return $form;
 
@@ -585,7 +585,7 @@ function uc_order_pane_admin_comments($op, $arg1) {
 }
 
 /**
- * Handle the "Update" order pane.
+ * Handles the "Update" order pane.
  */
 function uc_order_pane_update($op, $arg1) {
   switch ($op) {
@@ -597,10 +597,9 @@ function uc_order_pane_update($op, $arg1) {
 /**
  * Form to save order comments and update the order status.
  *
+ * @see theme_uc_order_view_update_controls()
+ * @see uc_order_view_update_form_submit()
  * @ingroup forms
- * @see
- *   theme_uc_order_view_update_controls()
- *   uc_order_view_update_form_submit()
  */
 function uc_order_view_update_form($form_state, $order) {
   $form['order_comment_field'] = array(
@@ -612,6 +611,7 @@ function uc_order_view_update_form($form_state, $order) {
   $form['order_comment_field']['order_comment'] = array(
     '#type' => 'textarea',
     '#description' => t('Order comments are used primarily to communicate with the customer.'),
+    '#wysiwyg' => FALSE,
   );
 
   $form['admin_comment_field'] = array(
@@ -623,6 +623,7 @@ function uc_order_view_update_form($form_state, $order) {
   $form['admin_comment_field']['admin_comment'] = array(
     '#type' => 'textarea',
     '#description' => t('Admin comments are only seen by store administrators.'),
+    '#wysiwyg' => FALSE,
   );
 
   $form['current_status'] = array(
@@ -641,10 +642,7 @@ function uc_order_view_update_form($form_state, $order) {
   );
 
   $options = array();
-  foreach (uc_order_status_list('general') as $status) {
-    $options[$status['id']] = $status['title'];
-  }
-  foreach (uc_order_status_list('specific') as $status) {
+  foreach (uc_order_status_list() as $status) {
     $options[$status['id']] = $status['title'];
   }
   $form['controls']['status'] = array(
@@ -672,26 +670,20 @@ function uc_order_view_update_form($form_state, $order) {
 }
 
 /**
- * @ingroup themeable
  * @see uc_order_view_update_form()
+ * @ingroup themeable
  */
 function theme_uc_order_view_update_controls($form) {
   return '<div class="update-controls">'. drupal_render($form) .'</div>';
 }
 
 /**
+ * Form submit handler for uc_order_view_update_form().
+ *
  * @see uc_order_view_update_form()
  */
 function uc_order_view_update_form_submit($form, &$form_state) {
   global $user;
-
-  if ($form_state['values']['status'] != $form_state['values']['current_status']) {
-    if (uc_order_update_status($form_state['values']['order_id'], $form_state['values']['status'])) {
-      if (is_null($form_state['values']['order_comment']) || strlen($form_state['values']['order_comment']) == 0) {
-        uc_order_comment_save($form_state['values']['order_id'], $user->uid, '-', 'order', $form_state['values']['status'], $form_state['values']['notify']);
-      }
-    }
-  }
 
   if (!is_null($form_state['values']['order_comment']) && strlen(trim($form_state['values']['order_comment'])) > 0) {
     uc_order_comment_save($form_state['values']['order_id'], $user->uid, $form_state['values']['order_comment'], 'order', $form_state['values']['status'], $form_state['values']['notify']);
@@ -699,6 +691,14 @@ function uc_order_view_update_form_submit($form, &$form_state) {
 
   if (!is_null($form_state['values']['admin_comment']) && strlen(trim($form_state['values']['admin_comment'])) > 0) {
     uc_order_comment_save($form_state['values']['order_id'], $user->uid, $form_state['values']['admin_comment']);
+  }
+
+  if ($form_state['values']['status'] != $form_state['values']['current_status']) {
+    if (uc_order_update_status($form_state['values']['order_id'], $form_state['values']['status'])) {
+      if (is_null($form_state['values']['order_comment']) || strlen($form_state['values']['order_comment']) == 0) {
+        uc_order_comment_save($form_state['values']['order_id'], $user->uid, '-', 'order', $form_state['values']['status'], $form_state['values']['notify']);
+      }
+    }
   }
 
   // Let conditional actions send email if requested.
@@ -711,7 +711,7 @@ function uc_order_view_update_form_submit($form, &$form_state) {
 }
 
 /**
- * Build the order view products table.
+ * Builds the order view products table.
  */
 function op_products_view_table($order) {
   $table = array(
@@ -722,22 +722,21 @@ function op_products_view_table($order) {
   $table['#columns']['qty'] = array(
     'cell' => array(
       'data' => t('Qty'),
-      'class' => 'text-right',
+      'class' => 'qty',
     ),
     'weight' => 0,
   );
   $table['#columns']['product'] = array(
     'cell' => array(
       'data' => t('Product'),
-      'class' => 'header-wide',
+      'class' => 'product',
     ),
     'weight' => 1,
   );
   $table['#columns']['model'] = array(
     'cell' => array(
       'data' => t('SKU'),
-      'class' => 'text-center',
-      'nowrap' => 'nowrap',
+      'class' => 'sku',
     ),
     'weight' => 2,
   );
@@ -745,7 +744,7 @@ function op_products_view_table($order) {
     $table['#columns']['cost'] = array(
       'cell' => array(
         'data' => t('Cost'),
-        'class' => 'text-right',
+        'class' => 'cost',
       ),
       'weight' => 3,
     );
@@ -753,14 +752,14 @@ function op_products_view_table($order) {
   $table['#columns']['price'] = array(
     'cell' => array(
       'data' => t('Price'),
-      'class' => 'text-right',
+      'class' => 'price',
     ),
     'weight' => 4,
   );
   $table['#columns']['total'] = array(
     'cell' => array(
       'data' => t('Total'),
-      'class' => 'text-right',
+      'class' => 'total',
     ),
     'weight' => 5,
   );
@@ -778,14 +777,17 @@ function op_products_view_table($order) {
       $data = array();
       $data['qty'] = array(
         '#value' => $product->qty .'&times;',
-        '#cell_attributes' => array('align' => 'right'),
+        '#cell_attributes' => array('class' => 'qty'),
       );
+      $node = node_load($product->nid);
+      $title = node_access('view', $node) ? l($product->title, 'node/'. $node->nid) : check_plain($product->title);
       $data['product'] = array(
-        '#value' => check_plain($product->title) . uc_product_get_description($product),
+        '#value' => $title . uc_product_get_description($product),
+        '#cell_attributes' => array('class' => 'product'),
       );
       $data['model'] = array(
         '#value' => check_plain($product->model),
-        '#cell_attributes' => array('align' => 'center', 'nowrap' => 'nowrap'),
+        '#cell_attributes' => array('class' => 'sku'),
       );
 
       $context['subject']['product'] = $product;
@@ -795,7 +797,7 @@ function op_products_view_table($order) {
 
         $data['cost'] = array(
           '#value' => uc_price($product->cost, $context),
-          '#cell_attributes' => array('align' => 'right', 'nowrap' => 'nowrap'),
+          '#cell_attributes' => array('class' => 'cost'),
         );
       }
 
@@ -806,13 +808,12 @@ function op_products_view_table($order) {
       );
       $data['price'] = array(
         '#value' => uc_price($product->price, $context),
-        '#cell_attributes' => array('align' => 'right', 'nowrap' => 'nowrap'),
+        '#cell_attributes' => array('class' => 'price'),
       );
       $data['total'] = array(
         '#value' => uc_price($price_info, $context),
-        '#cell_attributes' => array('align' => 'right', 'nowrap' => 'nowrap'),
+        '#cell_attributes' => array('class' => 'total'),
       );
-      $data['#attributes'] = array('valign' => 'top');
       $table['#rows'][] = $data;
     }
   }
@@ -827,7 +828,7 @@ function op_products_view_table($order) {
 }
 
 /**
- * Build the order customer's view products table.
+ * Builds the order customer's view products table.
  */
 function op_products_customer_table($order) {
   $table = array(
@@ -838,22 +839,21 @@ function op_products_customer_table($order) {
   $table['#columns']['qty'] = array(
     'cell' => array(
       'data' => t('Qty'),
-      'class' => 'text-right',
+      'class' => 'qty',
     ),
     'weight' => 0,
   );
   $table['#columns']['product'] = array(
     'cell' => array(
       'data' => t('Product'),
-      'class' => 'header-wide',
+      'class' => 'product',
     ),
     'weight' => 1,
   );
   $table['#columns']['model'] = array(
     'cell' => array(
       'data' => t('SKU'),
-      'class' => 'text-center',
-      'nowrap' => 'nowrap',
+      'class' => 'sku',
     ),
     'weight' => 2,
   );
@@ -861,7 +861,7 @@ function op_products_customer_table($order) {
     $table['#columns']['cost'] = array(
       'cell' => array(
         'data' => t('Cost'),
-        'class' => 'text-right',
+        'class' => 'cost',
       ),
       'weight' => 3,
     );
@@ -869,14 +869,14 @@ function op_products_customer_table($order) {
   $table['#columns']['price'] = array(
     'cell' => array(
       'data' => t('Price'),
-      'class' => 'text-right',
+      'class' => 'price',
     ),
     'weight' => 4,
   );
   $table['#columns']['total'] = array(
     'cell' => array(
       'data' => t('Total'),
-      'class' => 'text-right',
+      'class' => 'total',
     ),
     'weight' => 5,
   );
@@ -894,14 +894,17 @@ function op_products_customer_table($order) {
       $data = array();
       $data['qty'] = array(
         '#value' => $product->qty .'&times;',
-        '#cell_attributes' => array('align' => 'right'),
+        '#cell_attributes' => array('class' => 'qty'),
       );
+      $node = node_load($product->nid);
+      $title = node_access('view', $node) ? l($product->title, 'node/'. $node->nid) : check_plain($product->title);
       $data['product'] = array(
-        '#value' => check_plain($product->title) . uc_product_get_description($product),
+        '#value' => $title . uc_product_get_description($product),
+        '#cell_attributes' => array('class' => 'product'),
       );
       $data['model'] = array(
         '#value' => check_plain($product->model),
-        '#cell_attributes' => array('align' => 'center', 'nowrap' => 'nowrap'),
+        '#cell_attributes' => array('class' => 'sku'),
       );
 
       $context['subject']['product'] = $product;
@@ -910,7 +913,7 @@ function op_products_customer_table($order) {
         $context['field'] = 'cost';
         $data['cost'] = array(
           '#value' => uc_price($product->cost, $context),
-          '#cell_attributes' => array('align' => 'right', 'nowrap' => 'nowrap'),
+          '#cell_attributes' => array('class' => 'cost'),
         );
       }
 
@@ -921,13 +924,12 @@ function op_products_customer_table($order) {
       );
       $data['price'] = array(
         '#value' => uc_price($product->price, $context),
-        '#cell_attributes' => array('align' => 'right', 'nowrap' => 'nowrap'),
+        '#cell_attributes' => array('class' => 'price'),
       );
       $data['total'] = array(
         '#value' => uc_price($price_info, $context),
-        '#cell_attributes' => array('align' => 'right', 'nowrap' => 'nowrap'),
+        '#cell_attributes' => array('class' => 'total'),
       );
-      $data['#attributes'] = array('valign' => 'top');
       $table['#rows'][] = $data;
     }
   }
@@ -942,7 +944,7 @@ function op_products_customer_table($order) {
 }
 
 /**
- * Build the order comments table.
+ * Builds the order comments table.
  */
 function op_order_comments_view_table($comments) {
   $table = array(
@@ -976,7 +978,7 @@ function op_order_comments_view_table($comments) {
       $data = array();
       $data['date'] = array(
         '#value' => format_date($comment->created, 'custom', variable_get('uc_date_format_default', 'm/d/Y') .'<\b\r />g:i:s A'),
-        '#cell_attributes' => array('align' => 'center', 'nowrap' => 'true'),
+        '#cell_attributes' => array('class' => 'date'),
       );
       $data['user'] = array(
         '#value' => uc_get_initials($comment->uid),
@@ -1010,7 +1012,7 @@ function op_order_comments_view_table($comments) {
 }
 
 /**
- * Build the order admin comments table.
+ * Builds the order admin comments table.
  */
 function op_admin_comments_view_table($comments) {
   $table = array(
@@ -1036,7 +1038,7 @@ function op_admin_comments_view_table($comments) {
       $data = array();
       $data['date'] = array(
         '#value' => format_date($comment->created, 'custom', variable_get('uc_date_format_default', 'm/d/Y') .'<\b\r />g:i:s A'),
-        '#cell_attributes' => array('align' => 'center', 'nowrap' => 'true', 'valign' => 'top'),
+        '#cell_attributes' => array('align' => 'center', 'valign' => 'top'),
       );
       $data['user'] = array(
         '#value' => uc_get_initials($comment->uid),
@@ -1061,7 +1063,7 @@ function op_admin_comments_view_table($comments) {
 }
 
 /**
- * Build a list of order panes defined in the enabled modules.
+ * Builds a list of order panes defined in the enabled modules.
  */
 function _order_pane_list($view = 'view') {
   static $panes;
@@ -1090,7 +1092,7 @@ function _order_pane_list($view = 'view') {
 }
 
 /**
- * Return data from an order pane by pane ID and the array key.
+ * Returns data from an order pane by pane ID and the array key.
  */
 function _order_pane_data($pane_id, $key) {
   $panes = _order_pane_list();
@@ -1102,7 +1104,7 @@ function _order_pane_data($pane_id, $key) {
 }
 
 /**
- * Call an order pane function with the argument passed by reference.
+ * Calls an order pane function with the argument passed by reference.
  */
 function _call_order_pane_byref($func, $op, &$form) {
   return $func($op, $form);

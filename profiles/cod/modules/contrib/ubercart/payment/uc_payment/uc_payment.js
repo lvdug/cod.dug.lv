@@ -231,7 +231,7 @@ function get_payment_details(path) {
     data = { 'payment-details-data' : $('#edit-payment-details-data').val() };
   }
   else {
-    data = {};
+    data = { 'payment-details-data' : '' };
   }
   // Make the post to get the details for the chosen payment method.
   $.post(path, data,

@@ -28,7 +28,7 @@ class views_bulk_operations_plugin_style extends views_plugin_style_table {
     $options['hide_selector'] = array('default' => FALSE);
     $options['preserve_selection'] = array('default' => TRUE);
 
-    return $options; 
+    return $options;
   }
 
   /**
@@ -36,13 +36,13 @@ class views_bulk_operations_plugin_style extends views_plugin_style_table {
    */
   function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
-    
+
     $execution = array(
       VBO_EXECUTION_DIRECT => t('Invoke them directly'),
       VBO_EXECUTION_BATCH => t('Use Batch API'),
     );
     if (module_exists('drupal_queue')) {
-      $execution[VBO_EXECUTION_QUEUE] = t('Use <a href="@drupalqueue">Drupal Queue</a>', array('@drupalqueue' => url('http://drupal.org/project/drupal_queue'))); 
+      $execution[VBO_EXECUTION_QUEUE] = t('Use <a href="@drupalqueue">Drupal Queue</a>', array('@drupalqueue' => url('http://drupal.org/project/drupal_queue')));
     }
     $form['execution_type'] = array(
       '#type' => 'radios',
@@ -55,7 +55,7 @@ class views_bulk_operations_plugin_style extends views_plugin_style_table {
       '#title' => t('Maximize Batch API performance'),
       '#description' => t('If checked, each batch process will execute as many rows as possible within the server resource limits.'),
       '#default_value' => $this->options['max_performance'],
-    );    
+    );
     $form['display_type'] = array(
       '#type' => 'radios',
       '#title' => t('Display operations as'),
@@ -127,12 +127,26 @@ class views_bulk_operations_plugin_style extends views_plugin_style_table {
       if (function_exists($form_function)) {
         $form_settings = call_user_func($form_function, @$this->options['operations'][$key]['settings']);
         foreach (element_children($form_settings) as $child) {
-          $form_settings[$child] += array(
-            '#process' => array('views_process_dependency'),
-            '#dependency' => array(
-              $dom_id => array(1),
-            ),
-          );
+          // The views dependency code requires special handling for checkboxes.
+          if (isset($form_settings[$child]['#type']) && $form_settings[$child]['#type'] == 'checkboxes') {
+            $child_wrapper_id = 'edit-style-options-operations-' . str_replace('_', '-', $key) . '-settings-' . str_replace('_', '-', $child) . '-wrapper';
+            $form_settings[$child] += array(
+              '#prefix' => '<div id="' . $child_wrapper_id . '"><div>',
+              '#suffix' => '</div></div>',
+              '#process' => array('expand_checkboxes', 'views_process_dependency'),
+              '#dependency' => array(
+                $dom_id => array(1),
+              ),
+            );
+          }
+          else {
+            $form_settings[$child] += array(
+              '#process' => array('views_process_dependency'),
+              '#dependency' => array(
+                $dom_id => array(1),
+              ),
+            );
+          }
         }
         $form['operations'][$key]['settings'] = $form_settings;
       }
@@ -168,6 +182,19 @@ class views_bulk_operations_plugin_style extends views_plugin_style_table {
         call_user_func($form_function, $form, array('values' => $options['settings']));
       }
     }
+
+    // Reset runtime settings for this view.
+    unset($_SESSION['vbo_values'][$this->view->name]);
+  }
+
+  /**
+   * Implementation of views_plugin::query().
+   */
+  function query() {
+    // Add base field if not present in the query.
+    if (!isset($this->view->query->fields[$this->view->base_field])) {
+      $this->view->query->add_field($this->view->base_table, $this->view->base_field);
+    }
   }
 
   /**
@@ -190,7 +217,7 @@ class views_bulk_operations_plugin_style extends views_plugin_style_table {
     else {
       $form_suffix = 1;
     }
-    $form_id = 'views_bulk_operations_form__' . $form_suffix;
+    $this->form_id = 'views_bulk_operations_form__' . $form_suffix;
 
     // Populate hashed results for selection.
     $this->result = array();
@@ -198,18 +225,20 @@ class views_bulk_operations_plugin_style extends views_plugin_style_table {
       $this->result[_views_bulk_operations_hash_object($row)] = $row;
     }
     if ($this->options['preserve_selection']) {
-      if (empty($_SESSION['vbo_values'][$this->view->name]['result'])) {
-        $_SESSION['vbo_values'][$this->view->name]['result'] = array();
+      $view_id = _views_bulk_operations_view_id($this->view);
+      $view_name = $this->view->name;
+      if (empty($_SESSION['vbo_values'][$view_name][$view_id]['result'])) {
+        $_SESSION['vbo_values'][$view_name][$view_id]['result'] = array();
       }
-      $_SESSION['vbo_values'][$this->view->name]['result'] += $this->result;
+      $_SESSION['vbo_values'][$view_name][$view_id]['result'] += $this->result;
     }
 
     // Copy the plugin globally because we might need it during form validation.
     global $vbo_plugins;
-    $vbo_plugins[$form_id] = $this;
+    $vbo_plugins[$this->form_id] = $this;
 
     // Rendering the plugin as a form.
-    return drupal_get_form($form_id, $this);
+    return drupal_get_form($this->form_id, $this);
   }
 
   /**
@@ -255,7 +284,7 @@ class views_bulk_operations_plugin_style extends views_plugin_style_table {
       if (!$object_info) return $options;
       foreach ($this->all_operations as $key => $operation) {
         if ($operation['type'] == $object_info['type'] || $operation['type'] == 'system' || in_array($object_info['hook'], (array) $operation['hooks'])) {
-          $options[$key] = $operation['label'] .' ('. $key .')'; 
+          $options[$key] = $operation['label'] .' ('. $key .')';
         }
       }
     }
@@ -356,4 +385,3 @@ class views_bulk_operations_plugin_style extends views_plugin_style_table {
     return $actions;
   }
 }
-

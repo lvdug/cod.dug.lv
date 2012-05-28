@@ -5,7 +5,7 @@
  * Installation file for PayPal, primarily for the logging of IPNs.
 
 /**
- * Implementation of hook_requirements().
+ * Implements hook_requirements().
  */
 function uc_paypal_requirements($phase) {
   $t = get_t();
@@ -28,7 +28,7 @@ function uc_paypal_requirements($phase) {
 }
 
 /**
- * Implementation of hook_schema().
+ * Implements hook_schema().
  */
 function uc_paypal_schema() {
   $schema = array();
@@ -102,7 +102,7 @@ function uc_paypal_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  */
 function uc_paypal_install() {
   drupal_install_schema('uc_paypal');
@@ -112,7 +112,7 @@ function uc_paypal_install() {
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function uc_paypal_uninstall() {
   drupal_uninstall_schema('uc_paypal');
@@ -120,7 +120,7 @@ function uc_paypal_uninstall() {
 }
 
 /**
- * Implementation of hook_update_last_removed().
+ * Implements hook_update_last_removed().
  */
 function uc_paypal_update_last_removed() {
   return 2;

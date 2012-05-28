@@ -1,4 +1,7 @@
-
+/**
+ * @file
+ * Styles for uc_store module.
+ */
 .uc-price {
   white-space: nowrap;
 }
@@ -37,11 +40,13 @@
   margin-right: .5em;
 }
 
-.uc-customer-table tr.odd:hover, .uc-customer-table tr.even:hover {
+.uc-customer-table tr.odd:hover,
+.uc-customer-table tr.even:hover {
   background-color: #ddd;
 }
 
-.uc-cust-orders-table tr.odd:hover, .uc-cust-orders-table tr.even:hover {
+.uc-cust-orders-table tr.odd:hover,
+.uc-cust-orders-table tr.even:hover {
   background-color: #ddd;
 }
 
@@ -57,6 +62,27 @@
   clear: both;
 }
 
+.uc-default-submit {
+  height: 0px;
+  left: -9999px;
+  position: absolute;
+  top: -9999px;
+  width: 0px;
+}
+
+.uc-store-status td {
+  vertical-align: top;
+}
+
+.uc-store-status td.title {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.uc-store-status td.message {
+  width: 100%;
+}
+
 table.section-items {
   width: auto;
 }
@@ -65,7 +91,8 @@ table.section-items td {
   padding: .25em;
 }
 
-#uc-country-import-form .form-item, #uc-country-import-form .form-item label {
+#uc-country-import-form .form-item,
+#uc-country-import-form .form-item label {
   display: inline;
   float: left;
   margin-right: 1em;

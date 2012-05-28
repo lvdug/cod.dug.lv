@@ -1,4 +1,7 @@
-
+/**
+ * @file
+ * Styles for uc_order module.
+ */
 .order-overview-form {
   float: left;
   padding: 0em 2em 0em 0em;
@@ -8,20 +11,23 @@
   margin-bottom: 0em;
 }
 
-.order-overview-form #uc-order-select-form, .order-overview-form #uc-order-admin-sort-form {
+.order-overview-form #uc-order-select-form,
+.order-overview-form #uc-order-admin-sort-form {
   margin-bottom: 0em;
 }
 
 .uc-orders-table {
-  width: 100%;
   clear: both;
+  width: 100%;
 }
 
+.uc-orders-table td,
 .uc-orders-table thead th {
   white-space: nowrap;
 }
 
-.uc-orders-table tr.odd:hover, .uc-orders-table tr.even:hover {
+.uc-orders-table tr.odd:hover,
+.uc-orders-table tr.even:hover {
   background-color: #ddd;
 }
 
@@ -35,19 +41,19 @@
 }
 
 .order-admin-icons img {
+  padding: 0px 3px;
   position: relative;
   top: 3px;
-  padding: 0px 3px;
 }
 
 .order-pane {
-  border-style: solid;
   border-color: #bbb;
+  border-style: solid;
   border-width: 1px;
-  padding: .5em;
-  margin: .5em;;
-  width: auto;
   line-height: 1.1em;
+  margin: .5em;;
+  padding: .5em;
+  width: auto;
 }
 
 .order-pane thead {
@@ -77,56 +83,66 @@
 }
 
 .abs-right {
-  float: right;
   clear: right;
-}
-
-.text-right {
-  text-align: right;
+  float: right;
 }
 
 .text-center {
   text-align: center;
 }
 
-.header-wide {
-  width: 80%;
-}
-
 .full-width {
   width: 100%;
 }
 
-.order-pane-table {
-  width: 100%;
-}
-
-.order-pane-table thead th {
+.order-pane-table th {
+  padding: 4px 8px;
   font-weight: bold;
-  background-color: #ddd;
-  border-style: solid;
-  border-width: 0px 0px 2px 0px;
-  border-color: #bbb;
-  padding: 4px 8px;
 }
 
-.order-pane-table tr {
-  border-style: solid;
-  border-width: 0px 0px 1px 0px;
-  border-color: #bbb;
+.order-pane-table td {
+  padding: 4px 8px;
+  vertical-align: top;
 }
 
-.order-pane-table tr.odd td, .order-pane-table tr.even td {
-  padding: 4px 8px;
+.order-pane-table td.qty,
+.order-pane-table td.sku {
+  text-align: center;
+  white-space: nowrap;
 }
+
+.order-pane-table td.product {
+  width: 80%;
+}
+
+.order-pane-table td.cost,
+.order-pane-table td.price,
+.order-pane-table td.total {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.uc-order-comments td {
+  vertical-align: top;
+}
+
+.uc-order-comments td.date,
+.uc-order-comments td.status {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.uc-order-comments td.message {
+  width: 100%;
+ }
 
 .order-edit-table {
   width: auto;
 }
 
 .order-edit-table .oet-label {
-  text-align: right;
   font-weight: bold;
+  text-align: right;
 }
 
 .order-edit-table .form-item {
@@ -136,36 +152,36 @@
 .address-select-box {
   background-color: #ddd;
   border: solid 1px #999;
-  width: auto;
-  padding-left: 1em;
   padding-bottom: 1em;
+  padding-left: 1em;
   margin-bottom: 1em;
+  width: auto;
 }
 
 .customer-select-box {
   background-color: #ddd;
   border: solid 1px #999;
-  width: auto;
   padding: 1em;
   margin-top: 1em;
+  width: auto;
 }
 
 .product-select-box {
   background-color: #ddd;
   border: solid 1px #999;
-  width: auto;
   margin-right: auto;
   margin-bottom: 1em;
+  width: auto;
 }
 
 .product-select-box2 {
   background-color: #ddd;
   border: solid 1px #999;
-  width: auto;
   margin-right: auto;
   margin-bottom: 1em;
   padding-left: 1em;
   padding-bottom: 1em;
+  width: auto;
 }
 
 .line-item-table {
@@ -177,9 +193,9 @@
 }
 
 .line-item-table .li-title {
-  width: 100%;
   font-weight: bold;
   text-align: right;
+  width: 100%;
 }
 
 .line-item-table .li-amount {
@@ -220,7 +236,8 @@
   padding-right: 1em;
 }
 
-.update-controls div, .update-controls label {
+.update-controls div,
+.update-controls label {
   display: inline;
 }
 

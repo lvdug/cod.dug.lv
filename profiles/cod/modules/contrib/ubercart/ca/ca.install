@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_schema().
+ * Implements hook_schema().
  */
 function ca_schema() {
   $schema = array();
@@ -92,14 +92,14 @@ function ca_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  */
 function ca_install() {
   drupal_install_schema('ca');
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function ca_uninstall() {
   drupal_uninstall_schema('ca');

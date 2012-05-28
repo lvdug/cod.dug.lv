@@ -14,7 +14,7 @@ require_once('uc_shipping.ca.inc');
  ******************************************************************************/
 
 /**
- * Implementation of hook_shipping_menu().
+ * Implements hook_shipping_menu().
  */
 function uc_shipping_menu() {
   $items = array();
@@ -164,14 +164,14 @@ function uc_shipping_order_access($order) {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implements hook_perm().
  */
 function uc_shipping_perm() {
   return array('fulfill orders');
 }
 
 /**
- * Implementation of hook_theme().
+ * Implements hook_theme().
  */
 function uc_shipping_theme() {
   return array(
@@ -237,7 +237,7 @@ function template_preprocess_uc_packing_slip(&$variables) {
  ******************************************************************************/
 
 /**
- * Implementation of hook_order_pane().
+ * Implements hook_order_pane().
  */
 function uc_shipping_order_pane() {
   $panes[] = array(
@@ -671,7 +671,7 @@ function uc_shipping_address_form($form_state, $addresses, $order) {
   $address = reset($addresses);
   $form['origin']['pickup_address_select'] = uc_shipping_select_address($addresses, 'apply_address(\'pickup\', this.value);', t('Saved Addresses'), TRUE);
   $form['origin']['pickup_address_select']['#weight'] = -2;
-  $form['origin']['pickup_email'] = uc_textfield(uc_get_field_name('email'), variable_get('uc_store_email', NULL), FALSE, NULL, 255);
+  $form['origin']['pickup_email'] = uc_textfield(uc_get_field_name('email'), uc_store_email(), FALSE, NULL, 255);
   $form['origin']['pickup_email']['#weight'] = -1;
   $form['origin']['pickup_first_name'] = uc_textfield(uc_get_field_name('first_name'), $address->first_name, FALSE);
   $form['origin']['pickup_last_name'] = uc_textfield(uc_get_field_name('last_name'), $address->last_name, FALSE);

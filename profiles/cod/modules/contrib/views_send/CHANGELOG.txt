@@ -4,6 +4,10 @@ Views Send x.x-x.x, xxxx-xx-xx
 
 Views Send 6.x-1.x, xxxx-xx-xx
 ------------------------------
+#1468120 by cbergmann: views_send_debug has no effect.
+#1210758 by Sanjo: Incorrect detection of PHP maximum execution time almost exceeded.
+#1200584 by mradcliffe, hansfn: Emails from VBO not passing.
+#1207614 by rooby: There is no constant VIEWS_BULK_OPS_STEP_SINGLE.
 #1157616 by marktheshark: Changed Some spelling mistakes.
 #808518 by claudiu.cristea, sgabe: Added Split mail preparation from sending.
 #957126 by goose2000: Fixed Install error.

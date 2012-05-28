@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_views_default_views().
+ * Implements hook_views_default_views().
  */
 function uc_product_views_default_views() {
   $view = new view;

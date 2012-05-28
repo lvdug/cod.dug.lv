@@ -92,32 +92,38 @@ function views_send_mail_action_form($context) {
     '#maxlen' => 255,
   );
 
+  // The view needs to be executed, as we rely on the result set to
+  // retrieve the available fields
+  if (!$context['view']->executed) {
+    $context['view']->execute();
+  }
+
   $fields = array();
-  $keys = array_keys((array)$context['view']->result[0]);
-
   foreach ($context['view']->field as $field_name => $field) {
-    if (in_array($field->field_alias, $keys) && !isset($fields[$field->field_alias])) {
-      $field_text = $field->label() .' ('. $field->field_alias .')';
-      $fields[$field->field_alias] = $field_text;
-      $tokens['[views-send-'. $field->field_alias .']'] = $field_text;
+    if (!empty($field->content_field)) {
+      $field_key = $field_name;
+      $field_name = $field->content_field['field_name'];
     }
-
-    /* TODO: Find a right way to obtain the right Label for aliases.
-    // Iterate also through aliases.
-    foreach ($field->aliases as $alias_key => $alias) {
-      if (in_array($alias, $keys) && !isset($fields[$alias])) {
-        $field_text = $field->options['label'] .' ('. $alias .')';
-        $fields[$alias] = $field_text;
-        $tokens['[views-send-'. $alias .']'] = $field_text;
+    elseif (property_exists($field, 'field_alias')) {
+      $field_key = $field->field_alias;
+      if ($field_key == 'unknown') {
+        $field_key = $field_name;
       }
     }
-    */
+    else {
+      $field_key = $field_name;
+    }
+    $field_text = $field->label() . ' (' . $field_name . ')';
+    $fields[$field_key] = $field_text;
+    $tokens[$field_key] = $field_name;
+    $fields_name_text[$field_name] = $field_text;
   }
+
   $fields_options = array_merge(array('' => '<'. t('select') .'>'), $fields);
 
   $form['views_send_tokens'] = array(
     '#type' => 'value',
-    '#value' => $fields,
+    '#value' => $tokens,
   );
 
   $form['to'] = array(
@@ -173,7 +179,7 @@ function views_send_mail_action_form($context) {
   );
   $form['mail']['token']['tokens'] = array(
     '#type' => 'markup',
-    '#value' => theme('views_send_token_help', $fields),
+    '#value' => theme('views_send_token_help', $fields_name_text),
   );
 
   $form['additional'] = array(
@@ -240,10 +246,12 @@ function views_send_mail_action_validate($form, $form_state) {
      * action's form with node selection view" checkbox is checked. We are on
      * first submit and the $form_state['storage'] is not populated yet.
      */
-    if ($values['step'] == VIEWS_BULK_OPS_STEP_SINGLE) {
-      // Normalize selection.
-      _views_bulk_operations_adjust_selection($values['objects']['selection'], $values['objects']['select_all'], $values['exposed_input'], $values['arguments'], $form['#plugin']);
-      $records =& $values['objects']['selection'];
+    if ($values['step'] == VBO_STEP_SINGLE) {
+      // Get selection.
+      $plugin = $form['#plugin'];
+      $form_id = $values['form_id'];
+      $form_state['storage']['selection'] = _views_bulk_operations_get_selection($plugin, $form_state, $form_id);
+      $records =& $form_state['storage']['selection'];
     }
     /**
      * Common usage: "views_send_mail_action" isn't the only action configured
@@ -251,7 +259,12 @@ function views_send_mail_action_validate($form, $form_state) {
      * checked. $form_state['storage'] is populated and we will use it.
      */
     else {
-      $records =& $form_state['storage'][1]['objects']['selection'];
+      $records =& $form_state['storage']['selection'];
+    }
+
+    // When using the action in Rules nothing has been selected.
+    if (empty($records)) {
+      return;
     }
 
     foreach ($records as $record) {
@@ -320,10 +333,21 @@ function views_send_mail_action($object, $context) {
 
   // Populate row/context tokens.
   $token_keys = $token_values = array();
-  foreach (array_keys($context['views_send_tokens']) as $field) {
-    $token_keys[] = sprintf(VIEWS_SEND_TOKEN_PATTERN, $field);
-    $token_values[] = $context['row']->{$field};
+  foreach ($context['views_send_tokens'] as $field_key => $field_name) {
+    $token_keys[] = sprintf(VIEWS_SEND_TOKEN_PATTERN, $field_name);
+    if (substr($field_key, 0, 6) == 'field_') {
+      $token_values[] = $context['row']->{'node_data_field_text_' . $field_key};
+    }
+    else {
+      if (property_exists($context['row'], $field_key)) {
+        $token_values[] = $context['row']->{$field_key};
+      }
+      else {
+        $token_values[] = '';
+      }
+    }
   }
+
   $subject = str_replace($token_keys, $token_values, $subject);
   $body = str_replace($token_keys, $token_values, $body);
 
@@ -425,7 +449,7 @@ function views_send_form_alter($form, $form_state, $form_id) {
     );
 
     $recipients = array();
-    foreach ($form_state['storage'][1]['objects']['selection'] as $oid => $row) {
+    foreach ($form_state['storage']['selection'] as $oid => $row) {
       $email = $row->{$form_state["storage"]["operation_arguments"]["views_send_to_mail"]};
       $name = empty($form_state['storage']['operation_arguments']['views_send_to_name']) ? '' : $row->{$form_state["storage"]["operation_arguments"]["views_send_to_name"]};
       $recipients[] = check_plain(empty($name) ? $email : $name .' <'. $email .'>');

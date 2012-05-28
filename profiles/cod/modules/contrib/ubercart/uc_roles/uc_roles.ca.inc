@@ -44,23 +44,12 @@ function uc_roles_ca_predicate() {
       '#conditions' => array(
         array(
           '#name' => 'uc_order_status_condition',
-          '#title' => t('If the original order status was not Completed.'),
-          '#argument_map' => array(
-            'order' => 'order',
-          ),
-          '#settings' => array(
-            'negate' => TRUE,
-            'order_status' => 'completed',
-          ),
-        ),
-        array(
-          '#name' => 'uc_order_status_condition',
-          '#title' => t('If the updated order status is Completed.'),
+          '#title' => t('If the updated order status is payment received.'),
           '#argument_map' => array(
             'order' => 'updated_order',
           ),
           '#settings' => array(
-            'order_status' => 'completed',
+            'order_status' => 'payment_received',
           ),
         ),
       ),
@@ -415,10 +404,10 @@ function uc_roles_action_order_renew($order, $settings) {
       $existing_role = db_fetch_object(db_query("SELECT * FROM {uc_roles_expirations} WHERE uid = %d AND rid = %d", $account->uid, $role->rid));
 
       // Determine the expiration timestamp for the role.
-      $expiration = _uc_roles_product_get_expiration($role, $product->qty, !is_null($existing_role->expiration) ? $existing_role->expiration : NULL);
+      $expiration = _uc_roles_product_get_expiration($role, $product->qty, isset($existing_role->expiration) ? $existing_role->expiration : NULL);
 
       // Leave an order comment.
-      if (!is_null($existing_role->expiration)) {
+      if (isset($existing_role->expiration)) {
         $op = 'renew';
         $comment = t('Customer user role %role renewed.', array('%role' => _uc_roles_get_name($role->rid)));
 
@@ -442,7 +431,7 @@ function uc_roles_action_order_renew($order, $settings) {
         $new_expiration->expiration = NULL;
       }
 
-      uc_order_comment_save($order->order_id, $user->uid, $comment);
+      uc_order_comment_save($order->order_id, $account->uid, $comment);
 
       // Trigger role email.
       ca_pull_trigger('uc_roles_notify_'. $op, $order, $new_expiration);

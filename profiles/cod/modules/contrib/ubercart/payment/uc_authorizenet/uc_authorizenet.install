@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_requirements().
+ * Implements hook_requirements().
  */
 function uc_authorizenet_requirements($phase) {
   $t = get_t();
@@ -31,7 +31,7 @@ function uc_authorizenet_uninstall() {
 }
 
 /**
- * Implementation of hook_update_last_removed().
+ * Implements hook_update_last_removed().
  */
 function uc_authorizenet_update_last_removed() {
   return 3;

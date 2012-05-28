@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_schema().
+ * Implements hook_schema().
  */
 function uc_weightquote_schema() {
   $schema = array();
@@ -93,14 +93,14 @@ function uc_weightquote_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  */
 function uc_weightquote_install() {
   drupal_install_schema('uc_weightquote');
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function uc_weightquote_uninstall() {
   drupal_uninstall_schema('uc_weightquote');
@@ -231,6 +231,9 @@ function uc_weightquote_update_6001() {
   return $ret;
 }
 
+/**
+ * Change currency fields to numeric(16, 5).
+ */
 function uc_weightquote_update_6002() {
   $ret = array();
 

@@ -47,14 +47,16 @@ function uc_stock_menu() {
     'type' => MENU_NORMAL_ITEM,
     'file' => 'uc_stock.admin.inc',
   );
-  $items['admin/store/reports/stock'] = array(
-    'title' => 'Stock reports',
-    'description' => 'View reports for product stock.',
-    'page callback' => 'uc_stock_report',
-    'access arguments' => array('view reports'),
-    'type' => MENU_NORMAL_ITEM,
-    'file' => 'uc_stock.admin.inc',
-  );
+  if (module_exists('uc_reports')) {
+    $items['admin/store/reports/stock'] = array(
+      'title' => 'Stock reports',
+      'description' => 'View reports for product stock.',
+      'page callback' => 'uc_stock_report',
+      'access arguments' => array('view reports'),
+      'type' => MENU_NORMAL_ITEM,
+      'file' => 'uc_stock.admin.inc',
+    );
+  }
   $items['node/%node/edit/stock'] = array(
     'title' => 'Stock',
     'page callback' => 'drupal_get_form',
@@ -251,7 +253,7 @@ function _uc_stock_send_mail($order, $stock) {
   $account = uc_order_user_load($order);
   $token_filters = array('global' => NULL, 'order' => $order, 'user' => $account, 'stock' => $stock);
 
-  $to = variable_get('uc_stock_threshold_notification_recipients', variable_get('uc_store_email', ini_get('sendmail_from')));
+  $to = variable_get('uc_stock_threshold_notification_recipients', uc_store_email());
   $to = explode(',', $to);
 
   $from = uc_store_email_from();
@@ -264,7 +266,7 @@ function _uc_stock_send_mail($order, $stock) {
 
   // Send to each recipient.
   foreach ($to as $email) {
-    $sent = drupal_mail('uc_stock', 'threshold', $email, uc_store_mail_recipient_language($email), array('body' => $body, 'subject' => $subject), $from);
+    $sent = drupal_mail('uc_stock', 'threshold', $email, uc_store_mail_recipient_language($email), array('body' => $body, 'subject' => $subject, 'order' => $order, 'stock' => $stock), $from);
 
     if (!$sent['result']) {
       watchdog('uc_stock', 'Attempt to e-mail @email concerning stock level on sku @sku failed.', array('@email' => $email, '@sku' => $stock->sku), WATCHDOG_ERROR);
@@ -288,6 +290,14 @@ function uc_stock_views_api() {
  * Keeps backwards compatibility with contributed modules.
  */
 function uc_stock_decrement_product_stock($product, $key, $order) {
+  return uc_stock_adjust_product_stock($product, $key, $order);
+}
+
+/**
+ * Increment a product's stock.
+ */
+function uc_stock_increment_product_stock($product, $key, $order) {
+  $product->qty = -$product->qty;
   return uc_stock_adjust_product_stock($product, $key, $order);
 }
 

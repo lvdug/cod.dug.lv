@@ -1,5 +1,4 @@
 <?php
-// $Id: globalredirect.admin.inc,v 1.1.2.14 2010/07/11 19:28:55 njt1982 Exp $
 
 /**
  * @file
@@ -51,7 +50,7 @@ function globalredirect_settings() {
   $form['settings']['case_sensitive_urls'] = array(
     '#type' => 'checkbox',
     '#title' => t('Case Sensitive URL Checking'),
-    '#description' => t('If enabled, the module will compare the current URL to the alias stored in the system. If there are any differences in case then the user will be redirected to the correct URL.'),
+    '#description' => t('If enabled, the module will compare the current URL to the alias stored in the system. If there are any differences in case, the the user will be redirected to the correct URL.'),
     '#default_value' => $settings['case_sensitive_urls'],
   );
 
@@ -87,9 +86,28 @@ function globalredirect_settings() {
     '#default_value' => $settings['term_path_handler'],
   );
 
+  $form['settings']['frontpage_redirect'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Frontpage Redirect Handler'),
+    '#description' => t('If enabled, any request to the frontpage path will redirect to the site root.<br />
+                         Whatever you set as the path of the front page on the !link settings page will redirect to the site root (e.g. "node" or "node/1" and also its alias (e.g. in case you have set "node/1" as your home page but that page also has an alias "home")).', array(
+      '!link' => l(t('Site Information'), 'admin/settings/site-information'),
+    )),
+    '#default_value' => $settings['frontpage_redirect'],
+  );
 
-  $form['buttons']['submit'] = array('#type' => 'submit', '#submit' => array('globalredirect_settings_submit_save'),  '#value' => t('Save Configuration') );
-  $form['buttons']['reset']  = array('#type' => 'submit', '#submit' => array('globalredirect_settings_submit_reset'), '#value' => t('Reset to defaults') );
+
+  $form['buttons']['submit'] = array(
+    '#type' => 'submit',
+    '#submit' => array('globalredirect_settings_submit_save'),
+    '#value' => t('Save Configuration'),
+  );
+
+  $form['buttons']['reset'] = array(
+    '#type' => 'submit',
+    '#submit' => array('globalredirect_settings_submit_reset'),
+    '#value' => t('Reset to defaults'),
+  );
 
   return $form;
 }
