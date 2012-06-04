@@ -1,0 +1,23 @@
+; $Id: jaded.info,v 1.1 2009/05/15 07:28:06 agileware Exp $
+name = Jaded
+description = Tableless, multi-column, fixed width theme
+screenshot = screenshot.png
+core = 6.x
+engine = phptemplate
+regions[left] = Left sidebar
+regions[right] = Right sidebar
+regions[content] = Content
+regions[navigation] = Menu
+regions[footer] = Footer
+stylesheets[all][] = style.css
+scripts[] = script.js
+features[] = logo
+features[] = mission
+features[] = comment_user_picture
+features[] = favicon
+; Information added by drupal.org packaging script on 2009-05-19
+version = "6.x-1.0-beta3"
+core = "6.x"
+project = "jaded"
+datestamp = "1242777330"
+

@@ -1,0 +1,125 @@
+/* $Id: style.ie7.css,v 1.1 2009/05/15 07:28:06 agileware Exp $ */
+
+/* begin Box, Sheet */
+.Sheet-tl
+{
+	clip: rect(auto 16px 16px auto);
+}
+
+.Sheet-tr
+{
+	clip: rect(auto auto 16px 16px);
+}
+
+.Sheet-bl
+{
+	clip: rect(16px 16px auto auto);
+}
+
+.Sheet-br
+{
+	clip: rect(16px auto auto 16px);
+}
+
+.Sheet-tc
+{
+	clip: rect(auto auto 16px auto);
+}
+
+.Sheet-bc
+{
+	clip: rect(16px auto auto auto);
+}
+
+.Sheet-cr
+{
+	clip: rect(auto auto auto 16px);
+}
+
+.Sheet-cl
+{
+	clip: rect(auto 16px auto auto);
+}
+/* end Box, Sheet */
+
+/* begin Menu */
+.nav .r
+{
+	clip: rect(auto auto auto 898px);
+}
+/* end Menu */
+
+/* begin MenuItem */
+.artmenu a .r
+{
+	clip: rect(auto auto auto 404px);
+}
+/* end MenuItem */
+
+/* begin Box, Block */
+.Block-tl
+{
+	clip: rect(auto 11px 11px auto);
+}
+
+.Block-tr
+{
+	clip: rect(auto auto 11px 11px);
+}
+
+.Block-bl
+{
+	clip: rect(11px 11px auto auto);
+}
+
+.Block-br
+{
+	clip: rect(11px auto auto 11px);
+}
+
+.Block-tc
+{
+	clip: rect(auto auto 11px auto);
+}
+
+.Block-bc
+{
+	clip: rect(11px auto auto auto);
+}
+
+.Block-cr
+{
+	clip: rect(auto auto auto 11px);
+}
+
+.Block-cl
+{
+	clip: rect(auto 11px auto auto);
+}
+/* end Box, Block */
+
+/* begin BlockHeader */
+.BlockHeader .r
+{
+	clip: rect(auto auto auto 888px);
+}
+/* end BlockHeader */
+
+/* begin PostContent */
+.PostContent
+{
+	height:1%;
+}
+/* end PostContent */
+
+/* begin Button */
+a.Button .btn .r,
+button.Button .btn .r
+{
+	clip: rect(auto auto auto 399px);
+}
+/* end Button */
+
+.Footer .Footer-inner {
+  width: auto;
+}
