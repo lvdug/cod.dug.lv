@@ -1,0 +1,145 @@
+/*  Header image color samples: dark gray = 413B3A, gray = 5E646B, orange = FBB908, blue = 2277CA. Actual colors: orange = EBA60D, light blue = FBB7F8.  Poker chip: dark blue = 0A57A9, light blue = 46BFDE */
+
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+p, scan, h1, h2, h3, li, a, a:link, a:visited, a:focus, a:hover, a:active {
+    color: #413B3A;
+}
+a:link, a:visited, a:focus, a:hover, a:active {
+    text-decoration: none;
+}
+    .content a:link, .content a:visited {
+        border-bottom: 1px dashed #413B3A;
+    }
+    .content a:focus, .content a:hover, .content a:active {
+        border-bottom: 1px solid #413B3A;
+    }
+h2.title,
+h3.title {
+    background: #413B3B; /* Old browsers */
+    background: -moz-linear-gradient(top, #413B3B 0%, #6E747C 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#413B3B), color-stop(100%,#6E747C)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #413B3B 0%,#6E747C 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #413B3B 0%,#6E747C 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #413B3B 0%,#6E747C 100%); /* IE10+ */
+    background: linear-gradient(top, #413B3B 0%,#6E747C 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#413B3B', endColorstr='#6E747C',GradientType=0 ); /* IE6-9 */
+    color: #FFF;
+    padding: 2px 8px;
+    padding: 5px 12px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+    h2.title a,
+    h3.title a {
+        color: #FFF;
+        font-weight: bold;
+    }
+body {
+    background-color: #413B3A;
+    padding: 9px;
+}
+#page {
+    width: 1200px;
+}
+#header {
+    background-image: url( ../images/dclv2012_final.jpg );
+    height: 300px;
+}
+#main {
+    background-color: #EAEAEA;
+}
+#content {
+}
+    #content-inner {
+        padding: 1em 2em;
+    }
+#sidebar-first, #sidebar-second {
+    background-color: #EAEAEA;
+    padding: 1em 2em;
+    width: 25%;
+}
+    #sidebar-first .block, #sidebar-second .block {
+        margin-bottom: 1em;
+    }
+    /*  Because of width: 25% above.  */
+    .two-sidebars .center,
+    .sidebar-right .center {
+        margin-right: 25%;
+    }
+#navigation {
+    background: #F2A90F;
+    height: 50px;
+}
+    /*  Because of height: 50px above.  */
+    .with-navigation #content,
+    .with-navigation .sidebar {
+        margin-top: 50px;
+    }
+    #navigation ul#primary {
+        line-height: 50px;
+        margin-left: 1.6em;
+    }
+        #navigation ul#primary li {
+        }
+            #navigation ul#primary li a {
+                background-color: #EAEAEA;
+                color: #413B3A;
+                font-size: 1.4em;
+                font-weight: bold;
+                letter-spacing: 1.2px;
+                padding: 5px 12px;
+                -moz-border-radius: 4px;
+                -webkit-border-radius: 4px;
+                border-radius: 4px;
+            }
+                #navigation ul#primary li a:hover,
+                #navigation ul#primary li a:active {
+                    background-color: #9EC5E4;
+                    text-decoration: none;
+                }
+#user-login-form ul,
+#user-login-form li {
+    list-style: none;
+}
+.breadcrumb,
+.feed-icon {
+    display: none;
+}
+#block-menu-secondary-links {
+    background: #F2A90F;
+    padding: 1em;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    text-align: center;
+}
+    #block-menu-secondary-links .content a {
+        border-bottom: none;
+    }
+    #block-menu-secondary-links ul li.leaf {
+        display: inline;
+        margin-left: 0;
+        padding: 0;
+    }
+        #block-menu-secondary-links ul li:after {
+            content: ' | ';
+        }
+        #block-menu-secondary-links ul li.last:after {
+            content: none;
+        }
+        #block-menu-secondary-links ul li.leaf a {
+            padding: 0 0.6em;
+        }
+#footer {
+    padding: 1em;
+    text-align: center;
+}
+    #footer a {
+        color: #000;
+    }
+
