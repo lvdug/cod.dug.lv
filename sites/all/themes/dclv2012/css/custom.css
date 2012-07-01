@@ -8,9 +8,6 @@
 p, scan, h1, h2, h3, li, a, a:link, a:visited, a:focus, a:hover, a:active {
     color: #413B3A;
 }
-a:link, a:visited, a:focus, a:hover, a:active {
-    text-decoration: none;
-}
     .content a:link, .content a:visited {
         border-bottom: 1px dashed #413B3A;
     }
