@@ -11,6 +11,7 @@ body {
 /* line 10, ../sass/style.sass */
 a:link, a:visited {
   color: blue;
+  text-decoration: none;
 }
 
 /* line 15, ../sass/style.sass */

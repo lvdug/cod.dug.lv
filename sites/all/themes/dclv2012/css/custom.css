@@ -8,6 +8,20 @@
 p, scan, h1, h2, h3, li, a, a:link, a:visited, a:focus, a:hover, a:active {
     color: #413B3A;
 }
+a:link, a:visited {
+    border-bottom: 1px dashed #413B3A;
+    text-decoration: none;
+}
+a:focus, a:hover, a:active {
+    border-bottom: 1px solid #413B3A;
+    text-decoration: none;
+}
+    .content a:link, .content a:visited {
+        border-bottom: 1px dashed #413B3A;
+    }
+    .content a:focus, .content a:hover, .content a:active {
+        border-bottom: 1px solid #413B3A;
+    }
 h2.title,
 h3.title {
     background: #413B3B; /* Old browsers */
@@ -91,7 +105,7 @@ body {
                 -webkit-border-top-right-radius: 4px;
                 border-top-left-radius: 4px;
                 border-top-right-radius: 4px;
-                text-decoration: none;
+                border-bottom: none;
             }
                 #navigation ul#primary li.active-trail a {
                     background-color: #FAFAFA;
