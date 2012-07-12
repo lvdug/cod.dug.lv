@@ -24,17 +24,19 @@
 
     <!-- ______________________ HEADER _______________________ -->
 
-    <div id="header">
+    <a href="http://drupalcampvegas.com/">
+      <div id="header">
 
-      <?php if ($header): ?>
-        <div id="header-region">
-          <?php print $header; ?>
-        </div>
-      <?php endif; ?>
+        <?php if ($header): ?>
+          <div id="header-region">
+            <?php print $header; ?>
+          </div>
+        <?php endif; ?>
 
-      <?php // Uncomment to add the search box.// print $search_box; ?>
+        <?php // Uncomment to add the search box.// print $search_box; ?>
 
-    </div> <!-- /header -->
+      </div> <!-- /header -->
+    </a>
 
     <!-- ______________________ MAIN _______________________ -->
 
