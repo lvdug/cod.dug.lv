@@ -151,6 +151,10 @@ abbr {
   white-space: nowrap;
 }
 
+dt {
+  font-weight: bold;
+}
+
 /* UI improvments. */
 /* line 109, ../sass/style.sass */
 #edit-title {
