@@ -1,6 +1,6 @@
 /*  Header image color samples: dark gray = 413B3A, gray = 5E646B, orange = FBB908, blue = 2277CA. Actual colors: orange = EBA60D, light blue = FBB7F8.  Poker chip: dark blue = 0A57A9, light blue = 46BFDE */
 
-* {
+#page {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
