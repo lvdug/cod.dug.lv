@@ -159,3 +159,15 @@ body {
         color: #000;
     }
 
+/* Style the 'Sponsor Now' links so they show up a bit more. */
+.sponsor-now {
+  background-color: #84c1ed;
+  border-radius: 4px;
+  font-weight: bold;
+  padding: 3px;
+}
+
+/* Remove the underline from under pictures. */
+.picture a {
+  border-bottom: none;
+}
